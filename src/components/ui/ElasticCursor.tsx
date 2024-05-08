@@ -86,7 +86,7 @@ function ElasticCursor() {
     <div
       ref={circleRef}
       style={{ zIndex: 100, backdropFilter: "invert(100%)" }}
-      className="fixed w-[40px] h-[40px] border-[1px] border-solid border-white rounded-full cursor-none top-[-20px] left-[-20px] pointer-events-none"
+      className="hidden sm:block fixed w-[40px] h-[40px] border-[1px] border-solid border-white rounded-full cursor-none top-[-20px] left-[-20px] pointer-events-none"
     ></div>
   );
 }
