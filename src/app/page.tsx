@@ -11,7 +11,7 @@ function MainPage() {
     <div className="flex flex-col items-center justify-center w-full h-full overflow-hidden">
       {/* <div className="hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-301/0 via-zinc-300/50 to-zinc-300/0" /> */}
       <h1 className="z-10 font-thin text-4xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-4xl md:text-7xl whitespace-nowrap bg-clip-text ">
-        Hi, I am Naresh Khatri 
+        Hi, I am <br className="md:hidden"/> Naresh Khatri 
       </h1>
       {/* <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" /> */}
       <h1 className="z-10 mt-4 font-thin text-xl text-transparent duration-1000 bg-zinc-400 cursor-default text-edge-outline animate-title font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text ">
