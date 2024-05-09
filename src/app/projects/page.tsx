@@ -57,7 +57,7 @@ best deals on luxury brands and products. Join our savvy community of shoppers a
     description: `the go-to app for JNTUA students, empowering them to analyze, compare, and view classwise results effortlessly.
      Dive into your academic journey with ease, track your progress, and gain valuable insights.`,
     link: "/projects/4",
-    images: [""],
+    images: ["/assets/projects-screenshots/jra/1.png"],
   },
 ];
 function Page() {
@@ -65,7 +65,7 @@ function Page() {
     <>
       <div className="container mx-auto md:px-[50px] xl:px-[150px] text-zinc-300 h-full">
         <h1 className="text-4xl mt-[100px] mb-[50px]">Projects</h1>
-        <ul className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4 place-content-stretch ">
+        <ul className="grid  md:grid-cols-2 lg:grid-cols-3 gap-10 place-content-around ">
           {PROJECTS.map((project) => (
             <li
               className="w-[300px] h-[400px] border-[.5px] rounded-md border-zinc-600"
