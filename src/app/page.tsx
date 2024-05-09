@@ -8,7 +8,7 @@ import { FaFile, FaGithub, FaLinkedin } from "react-icons/fa6";
 
 function MainPage() {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full overflow-hidden">
+    <div className="flex flex-col items-center justify-center w-full h-full overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black overflow-x-hidden">
       {/* <div className="hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-301/0 via-zinc-300/50 to-zinc-300/0" /> */}
       <h1 className="z-10 font-thin text-4xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-4xl md:text-7xl whitespace-nowrap bg-clip-text ">
         Hi, I am <br className="md:hidden"/> Naresh Khatri 
