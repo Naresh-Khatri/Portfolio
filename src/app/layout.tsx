@@ -35,13 +35,12 @@ export default function RootLayout({
       <body
         className={`${
           process.env.NODE_ENV === "development" ? "debug-screens" : undefined
-        }
-         bg-gradient-to-tl from-black via-zinc-600/20 to-black`}
+        } overflow-x-hidden`}
       >
         <Header />
         <ElasticCursor />
         <Particles
-          className="absolute inset-0 -z-10 animate-fade-in"
+          className="fixed inset-0 -z-10 animate-fade-in"
           quantity={100}
         />
         <main style={{ marginTop: "60px", height: "calc(100dvh - 60px)" }}>
