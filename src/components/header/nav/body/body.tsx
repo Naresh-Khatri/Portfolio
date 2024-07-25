@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import styles from './style.module.scss';
 import { blur, translate } from '../../anim';
-import { Link as LinkType } from '@/types/link';
+import { Link as LinkType } from '@/types';
 
 interface SelectedLink {
   isActive: boolean;

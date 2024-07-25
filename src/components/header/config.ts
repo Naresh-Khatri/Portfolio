@@ -1,5 +1,6 @@
+import { Link } from "@/types";
 
-const links= [
+const links: Link[] = [
   {
     title: 'Home',
     href: '/',
