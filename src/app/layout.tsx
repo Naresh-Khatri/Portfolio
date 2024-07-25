@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Archivo_Black } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/ui/Header";
 import ElasticCursor from "@/components/ui/ElasticCursor";
 import Particles from "@/components/Particles";
+import { ThemeProvider } from "@/components/theme-provider";
+import Header from "@/components/header/header";
 
 export const metadata: Metadata = {
   title: "Naresh Khatri",
@@ -32,20 +33,21 @@ export default function RootLayout({
   return (
     <html lang="en" className={[archivoBlack.className].join(" ")}>
       <head>{/* <Analytics /> */}</head>
-      <body
-        className={`${
-          process.env.NODE_ENV === "development" ? "debug-screens" : undefined
-        } overflow-x-hidden`}
-      >
-        <Header />
-        <ElasticCursor />
-        <Particles
-          className="fixed inset-0 -z-10 animate-fade-in"
-          quantity={100}
-        />
-        <main style={{ marginTop: "60px", height: "calc(100dvh - 60px)" }}>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Particles
+            className="fixed inset-0 -z-10 animate-fade-in"
+            quantity={100}
+          />
+          <Header />
           {children}
-        </main>
+          <ElasticCursor />
+        </ThemeProvider>
       </body>
     </html>
   );
