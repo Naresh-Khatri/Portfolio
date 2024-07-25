@@ -1,0 +1,30 @@
+.introduction {
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-inline: 60px;
+  padding-bottom: 30px;
+  position: fixed;
+  z-index: 99;
+  // TODO: Add a better color instead of just the background to make it pop more
+  background-color: hsl(var(--background));
+  svg {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: calc(100% + 300px);
+    path {
+      fill: hsl(var(--background));
+    }
+  }
+  p {
+    display: flex;
+    color: hsl(var(--foreground));
+    font-size: 72px;
+    align-items: center;
+    position: absolute;
+    z-index: 1;
+  }
+}
