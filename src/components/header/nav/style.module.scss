@@ -1,0 +1,25 @@
+.nav {
+  overflow: hidden;
+
+  .wrapper {
+    position: relative;
+    display: flex;
+    gap: 50px;
+    margin-bottom: 12px; // prev 80px
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .nav {
+    .wrapper {
+      margin-bottom: 0px;
+      justify-content: space-between;
+    }
+  }
+}

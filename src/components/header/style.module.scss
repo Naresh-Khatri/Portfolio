@@ -1,0 +1,125 @@
+.header {
+  z-index: 10;
+  // background-color: hsl(var(--background) / .8);
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  backdrop-filter: blur(12px);
+
+  .background {
+    background-color: hsl(
+      240 10% 3.9%
+    ); // constant color instead of using a css variable
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+  }
+
+  .bar {
+    display: flex;
+    justify-content: flex-end;
+    text-transform: lowercase;
+    font-size: 12px;
+    font-weight: 400;
+    position: relative;
+
+    p {
+      margin: 0px;
+    }
+
+    a {
+      text-decoration: none;
+      color: hsl(var(--foreground));
+      position: absolute;
+      left: 0;
+    }
+
+    .shopContainer {
+      display: flex;
+      gap: 30px;
+      position: absolute;
+      right: 0;
+
+      .shop {
+        display: none;
+      }
+    }
+
+    .el {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+
+      .label {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      p {
+        &:nth-of-type(2) {
+          position: absolute;
+          opacity: 0;
+        }
+      }
+
+      .burger {
+        width: 22.5px;
+        position: relative;
+        pointer-events: none;
+
+        &::after,
+        &::before {
+          content: '';
+          height: 1px;
+          width: 100%;
+          background-color: hsl(var(--foreground));
+          position: relative;
+          display: block;
+          transition: all 1s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        &::after {
+          top: -4px;
+        }
+
+        &::before {
+          top: 4px;
+        }
+      }
+
+      .burgerActive {
+        &::after {
+          transform: rotate(45deg);
+          top: -1px;
+        }
+
+        &::before {
+          transform: rotate(-45deg);
+          top: 1px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .header {
+    padding: 20px;
+
+    .bar {
+      font-size: 15px;
+    }
+
+    .shop {
+      display: block;
+      cursor: pointer;
+    }
+  }
+}

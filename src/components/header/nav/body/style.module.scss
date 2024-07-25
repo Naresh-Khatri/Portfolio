@@ -1,0 +1,33 @@
+.body {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 40px;
+
+  a {
+    color: hsl(var(--foreground));
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0px;
+    display: flex;
+    overflow: hidden;
+    font-size: 32px;
+    padding-right: 30px;
+    padding-top: 10px;
+    font-weight: 350;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .body {
+    max-width: 1200px;
+    margin-top: 80px;
+
+    p {
+      font-size: 5vw;
+      padding-right: 2vw;
+    }
+  }
+}
