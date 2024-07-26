@@ -24,6 +24,10 @@ function SmoothScroll({ children }: LenisProps) {
       root
       options={{
         duration: 2,
+        prevent: (node) => {
+          const modalOpen = node.classList.contains("project-modal");
+          return modalOpen;
+        },
       }}
     >
       {children}
