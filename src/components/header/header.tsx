@@ -5,6 +5,7 @@ import Link from "next/link";
 import styles from "./style.module.scss";
 import { opacity, background } from "./anim";
 import Nav from "./nav";
+import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   loader?: boolean;
@@ -15,7 +16,7 @@ const Header = ({ loader }: HeaderProps) => {
 
   return (
     <motion.header
-      className={styles.header}
+      className={cn(styles.header, "transition-colors delay-100 duration-500 ease-in")}
       style={{
         background: isActive ? "hsl(var(--background) / .8)" : "transparent",
       }}
@@ -32,8 +33,8 @@ const Header = ({ loader }: HeaderProps) => {
     >
       <div className={styles.bar}>
         <Link href="/" className="flex items-center justify-center">
-          <span className="text-md font-semibold transition-transform hover:translate-x-1 hover:translate-y-1">
-          Naresh Khatri
+          <span className="text-md transition-transform hover:translate-x-1 hover:translate-y-1">
+            Naresh Khatri
           </span>
         </Link>
         <div onClick={() => setIsActive(!isActive)} className={styles.el}>
