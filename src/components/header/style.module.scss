@@ -1,5 +1,5 @@
 .header {
-  z-index: 10;
+  z-index: 999;
   // background-color: hsl(var(--background) / .8);
   position: fixed;
   width: 100%;
@@ -8,9 +8,7 @@
   backdrop-filter: blur(12px);
 
   .background {
-    background-color: hsl(
-      240 10% 3.9%
-    ); // constant color instead of using a css variable
+    background-color: hsl(240 10% 3.9%); // constant color instead of using a css variable
     opacity: 0.5;
     height: 100%;
     width: 100%;
