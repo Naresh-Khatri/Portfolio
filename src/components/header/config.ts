@@ -8,12 +8,17 @@ const links: Link[] = [
   },
   {
     title: 'About',
-    href: 'about',
+    href: '#about',
+    thumbnail: 'about.jpg'
+  },
+  {
+    title: 'Skills',
+    href: '#skills',
     thumbnail: 'about.jpg'
   },
   {
     title: 'Projects',
-    href: '/projects',
+    href: '#projects',
     thumbnail: 'projects.jpg'
   },
   // {
