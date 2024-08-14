@@ -2,16 +2,114 @@
 import Image from "next/image";
 import React from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalTrigger,
+} from "../ui/animated-modal";
+import { motion } from "framer-motion";
 const Projects = () => {
   const cards = data.map((card, index) => (
     <Card key={card.src} card={card} index={index} layout={true} />
   ));
   return (
-    <div className="w-full h- py-20">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
-        Get to know your iSad.
-      </h2>
-      <Carousel items={cards} />
+    <div className="grid grid-cols-1 md:grid-cols-3">
+      {/* {data.map((card, index) => (
+        <Card key={card.src} card={card} index={index} layout={true} />
+      ))} */}
+      {/* <Carousel items={cards} /> */}
+      {data.map((card, index) => (
+        <Modall key={card.src} card={card} index={index} layout={true} />
+      ))}
+    </div>
+  );
+};
+const Modall = ({ card, index, layout }: any) => {
+  const images = [
+    "https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1573790387438-4da905039392?q=80&w=3425&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1555400038-63f5ba517a47?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1554931670-4ebfabf6e7a9?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=2581&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  ];
+  return (
+    <div className="flex items-center justify-center">
+      <Modal>
+        <ModalTrigger className="bg-transparent flex justify-center group/modal-btn">
+          {/* <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
+            Book your flight
+          </span>
+          <div className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20">
+            ✈️
+          </div> */}
+          <div
+            className="relative w-[400px] h-auto"
+            style={{ aspectRatio: "3/2" }}
+          >
+            <Image
+              className="absolute w-full h-full top-0 left-0"
+              src={card.src}
+              alt={card.alt}
+              width={300}
+              height={300}
+            />
+            <div className="absolute w-full h-1/2 bottom-[-30px] left-0 bg-gradient-to-t from-black/90 to-transparent">
+              <div className="flex flex-col items-start justify-start p-6">
+                <div className="text-lg text-left">{card.title}</div>
+                <div className="text-xs bg-white text-black rounded-lg w-fit px-2">
+                  {card.category}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ModalTrigger>
+        <ModalBody>
+          <ModalContent>
+            <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-8">
+              {card.title}
+            </h4>
+            <div className="flex justify-center items-center">
+              {["1", "2", "3", "4", "5"].map((image, idx) => (
+                <motion.div
+                  key={"images" + idx}
+                  style={{
+                    rotate: Math.random() * 20 - 10,
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                    rotate: 0,
+                    zIndex: 100,
+                  }}
+                  whileTap={{
+                    scale: 1.1,
+                    rotate: 0,
+                    zIndex: 100,
+                  }}
+                  className="rounded-xl -mr-4 mt-4 p-1 bg-white dark:bg-neutral-800 dark:border-neutral-700 border border-neutral-100 flex-shrink-0 overflow-hidden"
+                >
+                  <Image
+                    src={`${card.src.split("1.png")[0]}${idx}.png`}
+                    alt="screenshots"
+                    width="500"
+                    height="500"
+                    className="rounded-lg h-20 w-20 md:h-40 md:w-40 object-cover flex-shrink-0"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </ModalContent>
+          <ModalFooter className="gap-4">
+            <button className="px-2 py-1 bg-gray-200 text-black dark:bg-black dark:border-black dark:text-white border border-gray-300 rounded-md text-sm w-28">
+              Cancel
+            </button>
+            <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black w-28">
+              Visit
+            </button>
+          </ModalFooter>
+        </ModalBody>
+      </Modal>
     </div>
   );
 };
@@ -50,40 +148,40 @@ const DummyContent = () => {
 
 const data = [
   {
-    category: "Artificial Intelligence",
-    title: "You can do more with AI.",
-    src: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=3556&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    category: "Learning",
+    title: "Coding Ducks",
+    src: "/assets/projects-screenshots/codingducks/1.png",
     content: <DummyContent />,
   },
   {
-    category: "Productivity",
-    title: "Enhance your productivity.",
-    src: "https://images.unsplash.com/photo-1531554694128-c4c6665f59c2?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    category: "Savings",
+    title: "Coupon Luxury",
+    src: "/assets/projects-screenshots/couponluxury/1.png",
     content: <DummyContent />,
   },
   {
     category: "Product",
-    title: "Launching the new Apple Vision Pro.",
-    src: "https://images.unsplash.com/photo-1713869791518-a770879e60dc?q=80&w=2333&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "GhostChat",
+    src: "/assets/projects-screenshots/ghostchat/1.png",
     content: <DummyContent />,
   },
 
   {
     category: "Product",
-    title: "Maps for your iPhone 15 Pro Max.",
-    src: "https://images.unsplash.com/photo-1599202860130-f600f4948364?q=80&w=2515&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "JNTUA Results Analyzer",
+    src: "/assets/projects-screenshots/jra/1.png",
     content: <DummyContent />,
   },
   {
     category: "iOS",
     title: "Photography just got better.",
-    src: "https://images.unsplash.com/photo-1602081957921-9137a5d6eaee?q=80&w=2793&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    src: "/assets/projects-screenshots/jra/1.png",
     content: <DummyContent />,
   },
   {
     category: "Hiring",
     title: "Hiring for a Staff Software Engineer",
-    src: "https://images.unsplash.com/photo-1511984804822-e16ba72f5848?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    src: "/assets/projects-screenshots/jra/1.png",
     content: <DummyContent />,
   },
 ];
