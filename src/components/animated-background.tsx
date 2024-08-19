@@ -231,7 +231,7 @@ const AnimatedBackground = () => {
         trigger: "#projects",
         start: "top 70%",
         end: "bottom bottom",
-        // scrub: true,
+        scrub: true,
         // markers: true,
         onEnter: () => {
           setActiveSection("projects");
@@ -253,7 +253,7 @@ const AnimatedBackground = () => {
         trigger: "#contact",
         start: "top 70%",
         end: "bottom bottom",
-        // scrub: true,
+        scrub: true,
         // markers: true,
         onEnter: () => {
           setActiveSection("contact");

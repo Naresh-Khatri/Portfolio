@@ -72,7 +72,7 @@ function MainPage() {
                 "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 "
               )}
             >
-              LET'S WORK <br />
+              LET&apos;S WORK <br />
               TOGETHER
             </h2>
             <Contact />

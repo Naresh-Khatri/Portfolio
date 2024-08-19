@@ -116,14 +116,14 @@ export function TypographyTable({
                 "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right"
               )}
             >
-              King's Treasury
+              King&apos;s Treasury
             </th>
             <th
               className={cn(
                 "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right"
               )}
             >
-              People's happiness
+              People&apos;s happiness
             </th>
           </tr>
         </thead>

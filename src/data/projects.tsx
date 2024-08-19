@@ -364,9 +364,9 @@ const projects: Project[] = [
         <div>
           <TypographyP className="font-mono ">
             CouponLuxury is your go-to destination for snagging the best deals
-            without lifting a finger. Whether you're hunting for the latest
+            without lifting a finger. Whether you&apos;re hunting for the latest
             discounts or trying to save a buck at your favorite stores,
-            CouponLuxury's got you covered.
+            CouponLuxury&apos;s got you covered.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
           <p className="font-mono mb-2 mt-4">
@@ -412,7 +412,7 @@ const projects: Project[] = [
             responsive design that works like a charm on any device.
           </p>
           <p className="font-mono mb-2">
-            CouponLuxury isn't just a website; it's your personal deal-hunting
+            CouponLuxury isn&apos;t just a website; it&apos;s your personal deal-hunting
             assistant, ensuring you never miss out on a bargain!
           </p>
           {/* <TypographyP className="my-4 mt-8">
@@ -451,7 +451,7 @@ const projects: Project[] = [
             The Booking Desk is your ultimate travel consultation hub, designed
             to turn your wanderlust dreams into reality. With a focus on smooth
             and visually captivating animations, navigating the site feels like
-            a breeze—it's almost as if the destinations are calling you.
+            a breeze—it&apos;s almost as if the destinations are calling you.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
           <p className="font-mono mb-2 mt-8">
@@ -462,7 +462,7 @@ const projects: Project[] = [
           <TypographyH3 className="my-4 mt-8">Blogs</TypographyH3>
           <p className="font-mono mb-2">
             Dive into the curated articles written by travel experts. Whether
-            you're looking for hidden gems or travel hacks, our blog section has
+            you&apos;re looking for hidden gems or travel hacks, our blog section has
             you covered.
           </p>
           <SlideShow
@@ -474,7 +474,7 @@ const projects: Project[] = [
           <TypographyH3 className="my-4 mt-8">Sanity CMS</TypographyH3>
 
           <p className="font-mono mb-2">
-            Keeping everything fresh and up-to-date, I've integrated Sanity CMS
+            Keeping everything fresh and up-to-date, I&apos;ve integrated Sanity CMS
             to manage all the content with ease, ensuring you always get the
             latest and greatest information.
           </p>
@@ -485,10 +485,10 @@ const projects: Project[] = [
             ]}
           />
           <p className="font-mono mb-2 my-8">
-            With a stunning 100% score on Lighthouse, The Booking Desk isn't
-            just beautiful—it's built to perform. Whether you're planning your
+            With a stunning 100% score on Lighthouse, The Booking Desk isn&apos;t
+            just beautiful—it&apos;s built to perform. Whether you&apos;re planning your
             next adventure or just daydreaming, our site delivers a top-notch
-            experience that's both informative and enjoyable.
+            experience that&apos;s both informative and enjoyable.
           </p>
         </div>
       );
@@ -576,8 +576,8 @@ const projects: Project[] = [
         <div>
           <TypographyP className="font-mono ">
             Ghostchat is your go-to spot for sending anonymous messages without
-            leaving a trace. Powered by Supabase, it's all about keeping things
-            low-key and secure. Whether you're sharing secrets, giving feedback,
+            leaving a trace. Powered by Supabase, it&apos;s all about keeping things
+            low-key and secure. Whether you&apos;re sharing secrets, giving feedback,
             or just having some fun, Ghostchat ensures your identity stays
             hidden, while your voice is heard. Say what you want, without the
             worry.
@@ -619,7 +619,7 @@ const projects: Project[] = [
             and enhance the experience of accessing academic results. It served
             as a powerful proxy between the JNTUA university results website and
             its users, offering a range of features that made result analysis
-            faster and more efficient. Here's what made it stand out:
+            faster and more efficient. Here&apos;s what made it stand out:
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} />
           <SlideShow images={[`${BASE_PATH}/jra/1.png`]} />

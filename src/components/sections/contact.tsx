@@ -21,7 +21,7 @@ const Contact = () => {
         <CardHeader>
           <CardTitle className="text-4xl">Contact Form</CardTitle>
           <CardDescription>
-            Need to chat? Drop your info here, and I'll get back to you faster
+            Need to chat? Drop your info here, and I&apos;ll get back to you faster
             than you can swipe through TikTok. No cap, just real talk!
           </CardDescription>
         </CardHeader>

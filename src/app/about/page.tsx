@@ -294,13 +294,15 @@ function Page() {
               a drive to make a positive impact.
             </p>
             <p className="mb-10">
-              When I&apos;m not coding, you can find me [Your Interests/Hobbies],
-              exploring new technologies, or sipping coffee while brainstorming
-              my next project.
+              When I&apos;m not coding, you can find me [Your
+              Interests/Hobbies], exploring new technologies, or sipping coffee
+              while brainstorming my next project.
             </p>
             <h1 className="text-3xl mb-10 lg:md-20">Stuff I use</h1>
             <div className="mb-5">
-              {!toolsLoaded ? <p className="h-[100px]"></p>: (
+              {!toolsLoaded ? (
+                <p className="h-[100px]"></p>
+              ) : (
                 <Splide
                   options={{
                     type: "loop",
