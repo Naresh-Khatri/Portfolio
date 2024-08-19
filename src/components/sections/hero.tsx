@@ -3,14 +3,27 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import { File, Github, Linkedin } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Hero = () => {
   return (
-    <div className="bottom-[10rem] left-[10rem] z-[2] md:absolute flex flex-col justify-center items-center w-full md:w-fit h-full md:h-fit">
+    <div
+      className={cn(
+        // "mt-14 md:mt-[70px] h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
+        "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
+        "flex flex-col justify-start md:justify-end items-center md:items-start",
+        "pt-28 sm:pt-0 sm:pb-32 md:p-24 lg:p-40 xl:p-48",
+        // "bg-blue-200"
+      )}
+    >
       {/* <div className="md:block hidden bg-gradient-to-r from-zinc-301/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-left animate-glow" /> */}
       <p
         className={cn(
-          "md:self-start mt-4 font-thin text-xl text-slate-500 dark:text-zinc-400",
+          "md:self-start mt-4 font-thin text-xl text-slate-500 dark:text-zinc-400 ml-2",
           "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
         )}
       >
@@ -19,8 +32,8 @@ const Hero = () => {
       </p>
       <h1
         className={cn(
-          "font-thin text-6xl text-transparent text-slate-800 dark:bg-white",
-          "cursor-default text-edge-outline font-display sm:text-7xl md:text-9xl whitespace-nowrap bg-clip-text "
+          "font-thin text-6xl text-transparent text-slate-800 ",
+          "cursor-default text-edge-outline font-display sm:text-7xl md:text-9xl "
         )}
       >
         Naresh <br className="md:block hiidden" /> Khatri
@@ -28,34 +41,53 @@ const Hero = () => {
       {/* <div className="md:block hidden bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-right animate-glow" /> */}
       <p
         className={cn(
-          "md:self-start mt-4 font-thin text-xl text-slate-500 dark:text-zinc-400",
+          "md:self-start mt-4 font-thin text-xl text-slate-500 dark:text-zinc-400 ml-2",
           "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
         )}
       >
         A Full Stack Web Developer
       </p>
 
-      <div className="my-16 md:self-start flex gap-3">
+      <div className="my-8 md:my-16 md:self-start flex gap-3 ml-2">
         <Link
           href={
             "https://drive.google.com/file/d/12cV9lMDqK5VxnMu2NxpdQt4WIOB-spaZ/view"
           }
         >
-          <Button>
-            <div className="flex gap-2">
-              <File size={24} /> Resume
-            </div>
-          </Button>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <Button className="flex items-center gap-2">
+                <File size={24} /> Resume
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Click to see my resume</p>
+            </TooltipContent>
+          </Tooltip>
         </Link>
         <Link href={"https://github.com/Naresh-Khatri"}>
-          <Button>
-            <Github size={24} fill="#000" />
-          </Button>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <Button>
+                <Github size={24} fill="#000" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>This is my Github profile</p>
+            </TooltipContent>
+          </Tooltip>
         </Link>
         <Link href={"https://www.linkedin.com/in/naresh-khatri/"}>
-          <Button>
-            <Linkedin size={24} />
-          </Button>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <Button>
+                <Linkedin size={24} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Welcome to my LinkedIn</p>
+            </TooltipContent>
+          </Tooltip>
         </Link>
       </div>
     </div>
