@@ -9,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { ScrollArea } from "./scroll-area";
 
 interface ModalContextType {
   open: boolean;
@@ -70,6 +71,13 @@ export const ModalBody = ({
   const { open } = useModal();
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setOpen(false);
+      });
+    }
+  }, []);
+  useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
     } else {
@@ -96,7 +104,7 @@ export const ModalBody = ({
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50"
+          className="modall fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50"
         >
           <Overlay />
 
@@ -130,7 +138,9 @@ export const ModalBody = ({
             }}
           >
             <CloseIcon />
-            {children}
+            <ScrollArea className="h-[80dvh] w-full rounded-md border">
+              {children}
+            </ScrollArea>
           </motion.div>
         </motion.div>
       )}
@@ -146,7 +156,7 @@ export const ModalContent = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col flex-1 p-8 md:p-10", className)}>
+    <div className={cn("flex flex-col flex-1 p-3 md:p-10", className)}>
       {children}
     </div>
   );
@@ -172,6 +182,7 @@ export const ModalFooter = ({
 };
 
 const Overlay = ({ className }: { className?: string }) => {
+  const { setOpen } = useModal();
   return (
     <motion.div
       initial={{
@@ -185,7 +196,8 @@ const Overlay = ({ className }: { className?: string }) => {
         opacity: 0,
         backdropFilter: "blur(0px)",
       }}
-      className={`fixed inset-0 h-full w-full bg-black bg-opacity-50 z-50 ${className}`}
+      className={`modal-overlay fixed inset-0 h-full w-full bg-black bg-opacity-50 z-50 ${className}`}
+      onClick={() => setOpen(false)}
     ></motion.div>
   );
 };
@@ -195,12 +207,12 @@ const CloseIcon = () => {
   return (
     <button
       onClick={() => setOpen(false)}
-      className="absolute top-4 right-4 group"
+      className="absolute top-4 right-4 group z-[9999]"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
+        width="36"
+        height="36"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -224,9 +236,16 @@ export const useOutsideClick = (
   callback: Function
 ) => {
   useEffect(() => {
-    const listener = (event: any) => {
+    const listener = (
+      event: any
+      //  React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+    ) => {
       // DO NOTHING if the element being clicked is the target element or their children
-      if (!ref.current || ref.current.contains(event.target)) {
+      if (
+        !ref.current ||
+        ref.current.contains(event.target) ||
+        !event.target.classList.contains("no-click-outside")
+      ) {
         return;
       }
       callback(event);
