@@ -6,6 +6,7 @@ import styles from "./style.module.scss";
 import { opacity, background } from "./anim";
 import Nav from "./nav";
 import { cn } from "@/lib/utils";
+import FunnyThemeToggle from "../theme/funny-theme-toggle";
 
 interface HeaderProps {
   loader?: boolean;
@@ -16,7 +17,10 @@ const Header = ({ loader }: HeaderProps) => {
 
   return (
     <motion.header
-      className={cn(styles.header, "transition-colors delay-100 duration-500 ease-in")}
+      className={cn(
+        styles.header,
+        "transition-colors delay-100 duration-500 ease-in"
+      )}
       style={{
         background: isActive ? "hsl(var(--background) / .8)" : "transparent",
       }}
@@ -37,6 +41,7 @@ const Header = ({ loader }: HeaderProps) => {
             Naresh Khatri
           </span>
         </Link>
+        <FunnyThemeToggle className="w-6 h-6 mr-4" />
         <div onClick={() => setIsActive(!isActive)} className={styles.el}>
           <div className={styles.label}>
             <motion.p
