@@ -1,13 +1,13 @@
-import React from 'react';
-import Link from 'next/link';
-import { footer } from './config';
-
+import React from "react";
+import Link from "next/link";
+import { footer } from "./config";
 
 function Footer() {
+  const year = new Date().getFullYear();
   return (
     <footer className="flex w-full shrink-0 flex-col items-center gap-2 border-t border-border px-4 py-6 sm:flex-row md:px-6">
       <p className="text-xs text-gray-500 dark:text-gray-400">
-        © 2024-future Naresh Khatri. All rights reserved.
+        © {year} Naresh Khatri. All rights reserved.
       </p>
       <nav className="flex gap-4 sm:ml-auto sm:gap-6">
         {footer.map((link, index) => {
