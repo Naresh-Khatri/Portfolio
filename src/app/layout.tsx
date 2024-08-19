@@ -8,6 +8,7 @@ import Header from "@/components/header/header";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Footer from "@/components/footer/footer";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Naresh Khatri",
@@ -35,7 +36,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={[archivoBlack.className].join(" ")}>
-      <head>{/* <Analytics /> */}</head>
+      <head>
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="1860832e-b813-4ad1-8393-e3ab52c86936"
+        ></Script>
+        {/* <Analytics /> */}
+      </head>
       <body>
         <ThemeProvider attribute="class" enableSystem disableTransitionOnChange>
           <Particles
