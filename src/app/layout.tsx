@@ -5,6 +5,9 @@ import ElasticCursor from "@/components/ui/ElasticCursor";
 import Particles from "@/components/Particles";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header/header";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Footer from "@/components/footer/footer";
 
 export const metadata: Metadata = {
   title: "Naresh Khatri",
@@ -34,18 +37,17 @@ export default function RootLayout({
     <html lang="en" className={[archivoBlack.className].join(" ")}>
       <head>{/* <Analytics /> */}</head>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" enableSystem disableTransitionOnChange>
           <Particles
             className="fixed inset-0 -z-10 animate-fade-in"
             quantity={100}
           />
-          <Header />
-          {children}
+          <TooltipProvider>
+            <Header />
+            {children}
+            <Footer />
+          </TooltipProvider>
+          <Toaster />
           <ElasticCursor />
         </ThemeProvider>
       </body>
