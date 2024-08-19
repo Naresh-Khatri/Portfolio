@@ -5,9 +5,10 @@ import { ReactLenis, useLenis } from "@/lib/lenis";
 
 interface LenisProps {
   children: React.ReactNode;
+  isInsideModal?: boolean;
 }
 
-function SmoothScroll({ children }: LenisProps) {
+function SmoothScroll({ children, isInsideModal = false }: LenisProps) {
   const lenis = useLenis(({ scroll }) => {
     // called every scroll
   });
@@ -25,7 +26,8 @@ function SmoothScroll({ children }: LenisProps) {
       options={{
         duration: 2,
         prevent: (node) => {
-          const modalOpen = node.classList.contains("project-modal");
+          if (isInsideModal) return true;
+          const modalOpen = node.classList.contains("modall");
           return modalOpen;
         },
       }}
