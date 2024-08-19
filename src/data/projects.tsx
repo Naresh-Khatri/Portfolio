@@ -239,7 +239,7 @@ const projects: Project[] = [
     id: "codingducks",
     category: "Coding platform",
     title: "Coding Ducks",
-    src: "/assets/projects-screenshots/codingducks/1.png",
+    src: "/assets/projects-screenshots/codingducks/landing.png",
     screenshots: ["landing.png"],
     skills: {
       frontend: [
@@ -341,7 +341,7 @@ const projects: Project[] = [
     id: "couponluxury",
     category: "Coupon site",
     title: "Coupon Luxury",
-    src: "/assets/projects-screenshots/couponluxury/1.png",
+    src: "/assets/projects-screenshots/couponluxury/landing.png",
     screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png"],
     live: "https://www.couponluxury.com/",
     skills: {
@@ -432,7 +432,7 @@ const projects: Project[] = [
     id: "the-booking-desk",
     category: "Travel",
     title: "The Booking Desk",
-    src: "/assets/projects-screenshots/the-booking-desk/1.png",
+    src: "/assets/projects-screenshots/the-booking-desk/landing.png",
     screenshots: ["1.png"],
     live: "https://thebookingdesk.com/",
     skills: {
@@ -498,7 +498,7 @@ const projects: Project[] = [
     id: "portfolio",
     category: "Portfolio",
     title: "My Portfolio",
-    src: "/assets/projects-screenshots/portfolio/1.png",
+    src: "/assets/projects-screenshots/portfolio/landing.png",
     screenshots: ["1.png"],
     live: "http://nareshkhatri.vercel.app",
     skills: {
