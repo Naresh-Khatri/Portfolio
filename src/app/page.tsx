@@ -11,29 +11,33 @@ import Projects from "@/components/sections/projects";
 import Hero from "@/components/sections/hero";
 import AnimatedBackground from "@/components/animated-background";
 import Footer from "@/components/footer/footer";
+import Contact from "@/components/sections/contact";
 
 function MainPage() {
   return (
     <>
       <SmoothScroll>
-        <Preloader />
-        <main
-          // style={{ height: "100dvh", width: "100dvw" }}
-          className={cn("bg-slate-100 dark:bg-transparent")}
-        >
-          <div className="top-0 z-[0] fixed w-screen h-screen">
+        {/* <Preloader /> */}
+        <main className={cn("bg-slate-100 dark:bg-transparent")}>
+          <div className="top-0 z-[0] fixed w-full h-screen">
             <AnimatedBackground />
           </div>
-          <section id="section-0" className={cn("relative w-screen h-screen")}>
+          <section id="hero" className={cn("relative w-full h-screen")}>
             <Hero />
           </section>
 
-          {/* <section id="section-1" className="z-[100] bg-blue-400 h-[200vh]">
-            <h1 className="top-[50px] sticky text-8xl text-center"> hello</h1>
-          </section> */}
-          <section id="skills" className="bg-iblue-400 w-screen h-[200dvh]">
-            <div className="top-[70px] sticky">
-              <h2 className="bg-clip-text bg-gradient-to-b from-white/80 to-white/20 bg-opacity-50 text-4xl text-center text-transparent md:text-7xl">
+          <section
+            id="skills"
+            className="bg-iblue-400 w-full h-screen md:h-[130dvh]"
+          >
+            <div className="top-[70px] sticky mb-96">
+              <h2
+                className={cn(
+                  "bg-clip-text text-4xl text-center text-transparent md:text-7xl",
+                  "bg-gradient-to-b from-black/80 to-black/50",
+                  "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 "
+                )}
+              >
                 SKILLS
               </h2>
               <p className="mx-auto mt-4 line-clamp-4 max-w-3xl font-normal text-base text-center text-neutral-300">
@@ -42,13 +46,37 @@ function MainPage() {
             </div>
             {/* hello */}
           </section>
-          <section id="projects" className="min-h-screen z-[9999]">
-            <h2 className="bg-clip-text bg-gradient-to-b from-white/80 to-white/20 bg-opacity-50 text-4xl text-center text-transparent md:text-7xl">
+          <section
+            id="projects"
+            className="h-screen max-w-7xl mx-auto z-[9999]"
+          >
+            <h2
+              className={cn(
+                "bg-clip-text text-4xl text-center text-transparent md:text-7xl",
+                "bg-gradient-to-b from-black/80 to-black/50",
+                "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 mb-32"
+              )}
+            >
               Projects
             </h2>
             <Projects />
           </section>
-          <Footer />
+          <section
+            id="contact"
+            className="min-h-screen max-w-7xl mx-auto z-[9999]"
+          >
+            <h2
+              className={cn(
+                "bg-clip-text text-4xl text-center text-transparent md:text-7xl",
+                "bg-gradient-to-b from-black/80 to-black/50",
+                "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 "
+              )}
+            >
+              LET'S WORK <br />
+              TOGETHER
+            </h2>
+            <Contact />
+          </section>
         </main>
       </SmoothScroll>
     </>
