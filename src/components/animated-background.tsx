@@ -128,7 +128,6 @@ const AnimatedBackground = () => {
   const rotateKeyboard = useRef<gsap.core.Tween>();
   useEffect(() => {
     (async () => {
-      console.log(activeSection);
       if (!splineApp) return;
       const kbd: SPEObject | undefined = splineApp.findObjectByName("keyboard");
       if (!kbd) return;
@@ -139,6 +138,7 @@ const AnimatedBackground = () => {
         yoyo: true,
         yoyoEase: true,
         ease: "back.inOut",
+        delay: 2.5,
       });
       if (activeSection === "hero" || activeSection === "contact") {
         rotateKeyboard.current.restart();
@@ -164,11 +164,45 @@ const AnimatedBackground = () => {
   }, [activeSection, splineApp]);
 
   useEffect(() => {
+    revealKeyCaps();
     handleSplineInteractions();
     handleGsapAnimations();
     setBongoAnimation(bongoCatAnimation());
   }, [splineApp]);
 
+  const revealKeyCaps = () => {
+    if (!splineApp) return;
+    const allObjects = splineApp.getAllObjects();
+    const keycaps = allObjects.filter((obj) => obj.name === "keycap");
+    console.log(isMobile);
+    if (isMobile) {
+      const mobileKeyCaps = allObjects.filter(
+        (obj) => obj.name === "keycap-mobile"
+      );
+      mobileKeyCaps.forEach((keycap, idx) => {
+        keycap.visible = true;
+      });
+    } else {
+      const desktopKeyCaps = allObjects.filter(
+        (obj) => obj.name === "keycap-desktop"
+      );
+      desktopKeyCaps.forEach(async (keycap, idx) => {
+        await sleep(1900 + idx * 100);
+        keycap.visible = true;
+      });
+    }
+    keycaps.forEach(async (keycap, idx) => {
+      keycap.visible = false;
+      await sleep(1900 + idx * 100);
+      keycap.visible = true;
+      gsap.fromTo(
+        keycap.position,
+        { y: 200 },
+        { y: 35, duration: 0.5, delay: .1, ease: "bounce.out" }
+      );
+      // keycap.position.y -= 100;
+    });
+  };
   const handleSplineInteractions = () => {
     if (!splineApp) return;
     // show either desktop text or mobile text
@@ -280,7 +314,6 @@ const AnimatedBackground = () => {
 
     let interval: NodeJS.Timeout;
     const start = () => {
-      // console.log("started");
       let i = 0;
       framesParent.visible = true;
       interval = setInterval(() => {
@@ -295,7 +328,6 @@ const AnimatedBackground = () => {
       }, 100);
     };
     const stop = () => {
-      // console.log("stoped");
       clearInterval(interval);
       framesParent.visible = false;
       frame1.visible = false;
