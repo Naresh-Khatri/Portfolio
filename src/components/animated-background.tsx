@@ -7,6 +7,7 @@ const Spline = React.lazy(() => import("@splinetool/react-spline"));
 import { Skill, SkillNames, SKILLS } from "@/data/constants";
 import { sleep } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { usePreloader } from "./preloader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -164,16 +165,20 @@ const AnimatedBackground = () => {
   }, [activeSection, splineApp]);
 
   useEffect(() => {
-    revealKeyCaps();
     handleSplineInteractions();
     handleGsapAnimations();
     setBongoAnimation(bongoCatAnimation());
   }, [splineApp]);
-
-  const revealKeyCaps = () => {
+  const { isLoading } = usePreloader();
+  useEffect(() => {
+    console.log(isLoading);
+    if (!isLoading) revealKeyCaps();
+  }, [isLoading]);
+  const revealKeyCaps = async () => {
     if (!splineApp) return;
     const allObjects = splineApp.getAllObjects();
     const keycaps = allObjects.filter((obj) => obj.name === "keycap");
+    await sleep(500);
     console.log(isMobile);
     if (isMobile) {
       const mobileKeyCaps = allObjects.filter(
@@ -187,18 +192,18 @@ const AnimatedBackground = () => {
         (obj) => obj.name === "keycap-desktop"
       );
       desktopKeyCaps.forEach(async (keycap, idx) => {
-        await sleep(1900 + idx * 100);
+        await sleep(idx * 100);
         keycap.visible = true;
       });
     }
     keycaps.forEach(async (keycap, idx) => {
       keycap.visible = false;
-      await sleep(1900 + idx * 100);
+      await sleep(idx * 100);
       keycap.visible = true;
       gsap.fromTo(
         keycap.position,
         { y: 200 },
-        { y: 35, duration: 0.5, delay: .1, ease: "bounce.out" }
+        { y: 35, duration: 0.5, delay: 0.1, ease: "bounce.out" }
       );
       // keycap.position.y -= 100;
     });
