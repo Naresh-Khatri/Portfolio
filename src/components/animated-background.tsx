@@ -8,7 +8,6 @@ import { Skill, SkillNames, SKILLS } from "@/data/constants";
 import { sleep } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePreloader } from "./preloader";
-import { CSSPlugin } from "gsap";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -98,7 +97,7 @@ const AnimatedBackground = () => {
     start: () => void;
     stop: () => void;
   }>();
-  const [keycapAnimtation, setKeycapAnimtation] = useState<{
+  const [keycapAnimtations, setKeycapAnimtations] = useState<{
     start: () => void;
     stop: () => void;
   }>();
@@ -133,20 +132,12 @@ const AnimatedBackground = () => {
 
   const rotateKeyboard = useRef<gsap.core.Tween>();
   const teardownKeyboard = useRef<gsap.core.Tween>();
-  const setKeycapsToInitialPosition = () => {
-    if (!splineApp) return;
-    const objs = splineApp.getAllObjects();
-    const keycaps = objs.filter((obj) => obj.name === "keycap");
-    keycaps.forEach((keycap) => {
-      gsap.to(keycap.position, { y: 0, duration: 0.5 });
-    });
-  };
   // initialize gsap animations
   useEffect(() => {
     handleSplineInteractions();
     handleGsapAnimations();
     setBongoAnimation(getBongoAnimation());
-    setKeycapAnimtation(getKeycapAnimation());
+    setKeycapAnimtations(getKeycapsAnimation());
   }, [splineApp]);
 
   useEffect(() => {
@@ -187,71 +178,20 @@ const AnimatedBackground = () => {
       if (activeSection === "hero") {
         rotateKeyboard.current.restart();
         teardownKeyboard.current.pause();
-
-        Object.values(SKILLS).forEach((skill) => {
-          const keycap = splineApp.findObjectByName(skill.name);
-          if (!keycap) return;
-          gsap.to(keycap.position, {
-            y: Math.random() * 200 + 200,
-            duration: Math.random() * 5 + 5,
-            repeat: -1,
-            delay: Math.random() * 100,
-            // ease: "back.inOut",
-            ease: "elastic.out(2,0.1)",
-            yoyo: true,
-          });
-        });
       } else if (activeSection === "contact") {
         rotateKeyboard.current.pause();
         teardownKeyboard.current.restart();
       } else if (activeSection === "contact") {
         rotateKeyboard.current.pause();
-        // teardownKeyboard.current.restart();
+        teardownKeyboard.current.restart();
       } else if (activeSection === "contact") {
         rotateKeyboard.current.pause();
-        // teardownKeyboard.current.restart();
-        let foo;
-        // while (activeSection === "contact") {
-        //   const randSkill =
-        //     Object.values(SKILLS)[
-        //       Math.floor(Math.random() * Object.keys(SKILLS).length)
-        //     ];
-        //   const keycap = splineApp.findObjectByName(randSkill.name);
-        //   if (!keycap) continue;
-        //   foo = gsap.to(keycap.position, {
-        //     y: -90,
-        //     duration: Math.random() * 0.2,
-        //     repeat: 1,
-        //     ease: "back.inOut",
-        //     yoyo: true,
-        //   });
-
-        //   await sleep(Math.random() * 300 + 200);
-        //   // await sleep(500);
-        //   if (foo) foo.kill();
-        //   // foo = gsap.to(keycap.position, {
-        //   //   y: 0,
-        //   //   duration: 0.2,
-        //   //   ease: "back.inOut",
-        //   // });
-        //   // // await sleep(Math.random() * 500);
-        //   // await sleep(500);
-        //   // if (foo) foo.kill();
-        // }
       } else {
         rotateKeyboard.current.pause();
         teardownKeyboard.current.pause();
       }
       if (activeSection === "skills") {
-        setKeycapsToInitialPosition();
-        await sleep(300);
-        keycapAnimtation?.start();
-        setKeycapsToInitialPosition();
-        await sleep(300);
-        keycapAnimtation?.start();
       } else {
-        await sleep(300);
-        keycapAnimtation?.stop();
         splineApp.setVariable("kbd_val", "");
         splineApp.setVariable("desc", "");
       }
@@ -261,6 +201,13 @@ const AnimatedBackground = () => {
       } else {
         await sleep(200);
         bongoAnimation?.stop();
+      }
+      if (activeSection === "contact") {
+        await sleep(300);
+        keycapAnimtations?.start();
+      } else {
+        await sleep(300);
+        keycapAnimtations?.stop();
       }
     })();
     return () => {
@@ -304,9 +251,8 @@ const AnimatedBackground = () => {
       gsap.fromTo(
         keycap.position,
         { y: 200 },
-        { y: 35, duration: 0.5, delay: 0.1, ease: "bounce.out" }
+        { y: 50, duration: 0.5, delay: 0.1, ease: "bounce.out" }
       );
-      // keycap.position.y -= 100;
     });
   };
   const handleSplineInteractions = () => {
@@ -391,7 +337,7 @@ const AnimatedBackground = () => {
     gsap.timeline({
       scrollTrigger: {
         trigger: "#contact",
-        start: "top 70%",
+        start: "top 50%",
         end: "bottom bottom",
         scrub: true,
         // markers: true,
@@ -441,51 +387,46 @@ const AnimatedBackground = () => {
     };
     return { start, stop };
   };
-  const getKeycapAnimation = () => {
-    if (!splineApp) return;
-    const objs = splineApp.getAllObjects();
-    const keycaps = objs.filter((obj) => obj.name === "keycap");
-    if (!objs || !keycaps) return { start: () => {}, stop: () => {} };
+  const getKeycapsAnimation = () => {
+    if (!splineApp) return { start: () => {}, stop: () => {} };
 
-    let interval: NodeJS.Timeout;
-    let tweens: any;
+    let tweens: gsap.core.Tween[] = [];
     const start = () => {
-      console.log("starting", keycaps);
-      keycaps.forEach((keycap) => {
-        const t = gsap.to(keycap, {
-          // y: 40,
-          y: Math.random() * 200 + 200,
-          duration: 5,
-          repeat: -1,
-          yoyo: true,
+      removePrevTweens();
+      Object.values(SKILLS)
+        .sort(() => Math.random() - 0.5)
+        .forEach((skill, idx) => {
+          const keycap = splineApp.findObjectByName(skill.name);
+          if (!keycap) return;
+          const t = gsap.to(keycap?.position, {
+            y: Math.random() * 200 + 200,
+            duration: Math.random() * 2 + 2,
+            delay: idx * 0.6,
+            repeat: -1,
+            yoyo: true,
+            yoyoEase: "none",
+            ease: "elastic.out(1,0.8)",
+          });
+          tweens.push(t);
+        });
+    };
+    const stop = () => {
+      removePrevTweens();
+      Object.values(SKILLS).forEach((skill) => {
+        const keycap = splineApp.findObjectByName(skill.name);
+        if (!keycap) return;
+        const t = gsap.to(keycap?.position, {
+          y: 50,
+          duration: 4,
+          repeat: 1,
           ease: "elastic.out(1,0.8)",
         });
         tweens.push(t);
       });
-
-      // Object.values(SKILLS).forEach((skill) => {
-      //   const keycap = splineApp.findObjectByName(skill.name);
-      //   if (!keycap) return;
-      //   const t = gsap.to(keycap.position, {
-      //     y: Math.random() * 200 + 200,
-      //     duration: Math.random() * 5 + 5,
-      //     repeat: -1,
-      //     delay: Math.random() * 10,
-      //     // ease: "back.inOut",
-      //     ease: "elastic.out(1,0.8)",
-      //     yoyo: true,
-      //   });
-      //   tweens.push(t);
-      // });
+      setTimeout(removePrevTweens, 1000);
     };
-    const stop = () => {
-      console.log("stopping", keycaps);
-      gsap.to(keycaps, { y: 36, stagger: 0.1, duration: 0.5, yoyo: true });
-      setTimeout(() => {
-        if (tweens.length > 0) {
-          tweens.forEach((t: gsap.core.Tween) => t.kill());
-        }
-      }, 1000);
+    const removePrevTweens = () => {
+      tweens.forEach((t) => t.kill());
     };
     return { start, stop };
   };
@@ -500,28 +441,6 @@ const AnimatedBackground = () => {
           scene="/assets/skills-keyboard.spline"
         />
       </Suspense>
-      {/* <AnimatePresence>
-        {skillsSectionActive && selected && (
-          <motion.div
-            className="top-0 left-0 absolute bg-ired-400 w-[500px] text-6xl z-[-1] pointer-events-none "
-            initial={{ opacity: 0, translate: "300px 300px", rotateZ: 0 }}
-            animate={{ opacity: 1, transform: "350px 350px", rotateZ: 0 }}
-            exit={{ opacity: 0, translate: "400px 400px" }}
-            transition={{ duration: 0.5 }}
-            style={{
-              transform: "rotateX(-45deg) rotateY(0deg) rotateZ(-39deg) ",
-            }}
-          >
-            <h4 className="border-b-4">{selected.label}</h4>
-            <p className="border-t-i2 borderi-l-4 h-[300px] text-2xl text-neutral-400">
-              <div
-                className="font-sans"
-                dangerouslySetInnerHTML={{ __html: selected.shortDescription }}
-              ></div>
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence> */}
     </>
   );
 };
