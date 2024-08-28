@@ -1,12 +1,24 @@
+/**
+ * Disclaimer: This component is not entirely my own
+ */
+
 "use client";
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
 import { useMouse } from "@/hooks/use-mouse";
+import { usePreloader } from "../preloader";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 // Gsap Ticker Function
-function useTicker(callback: any, paused?: boolean) {
-  useLayoutEffect(() => {
+function useTicker(callback: any, paused: boolean) {
+  useEffect(() => {
     if (!paused && callback) {
       gsap.ticker.add(callback);
     }
@@ -59,6 +71,9 @@ function getRekt(el: HTMLElement) {
 const CURSOR_DIAMETER = 50;
 
 function ElasticCursor() {
+  const { loadingPercent, isLoading } = usePreloader();
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   // React Refs for Jelly Blob and Text
   const jellyRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -87,23 +102,28 @@ function ElasticCursor() {
     var scale = getScale(+vel.x, +vel.y); // Blob Squeeze Amount
 
     // Set GSAP quick setter Values on Loop Function
-    if (!isHovering) {
+    if (!isHovering && !isLoading) {
       set.x(pos.x);
       set.y(pos.y);
-      set.width(50 + scale * 450);
+      set.width(50 + scale * 350);
       set.r(rotation);
-      set.sx(1 + scale * 2);
-      set.sy(1 - scale * 4);
+      set.sx(1 + scale * 1.2);
+      set.sy(1 - scale * 2);
     } else {
       set.r(0);
     }
-  }, [isHovering]);
+  }, [isHovering, isLoading]);
 
+  const [cursorMoved, setCursorMoved] = useState(false);
   // Run on Mouse Move
   useLayoutEffect(() => {
+    if (isMobile) return;
     // Caluclate Everything Function
     const setFromEvent = (e: MouseEvent) => {
       if (!jellyRef.current) return;
+      if (!cursorMoved) {
+        setCursorMoved(true);
+      }
       const el = e.target as HTMLElement;
       const hoverElemRect = getRekt(el);
       if (hoverElemRect) {
@@ -118,8 +138,8 @@ function ElasticCursor() {
           height: el.offsetHeight + 20,
           x: rect.left + rect.width / 2,
           y: rect.top + rect.height / 2,
-          borderRadius: 20,
-          duration: 2,
+          borderRadius: 10,
+          duration: 1.5,
           ease: "elastic.out(1, 0.3)",
         });
 
@@ -153,14 +173,21 @@ function ElasticCursor() {
       loop();
     };
 
-    window.addEventListener("mousemove", setFromEvent);
+    if (!isLoading) window.addEventListener("mousemove", setFromEvent);
     return () => {
-      window.removeEventListener("mousemove", setFromEvent);
+      if (!isLoading) window.removeEventListener("mousemove", setFromEvent);
     };
-  }, []);
+  }, [isLoading]);
 
-  useTicker(loop);
+  useEffect(() => {
+    if (!jellyRef.current) return;
+    jellyRef.current.style.height = "2rem"; // "8rem";
+    jellyRef.current.style.borderRadius = "1rem";
+    jellyRef.current.style.width = loadingPercent * 2 + "vw";
+  }, [loadingPercent]);
 
+  useTicker(loop, isLoading || !cursorMoved || isMobile);
+  if (isMobile) return null;
   // Return UI
   return (
     <>
@@ -169,17 +196,21 @@ function ElasticCursor() {
         id={"jelly-id"}
         className={cn(
           `w-[${CURSOR_DIAMETER}px] h-[${CURSOR_DIAMETER}px] border-[.325rem] border-black dark:border-white`,
-          "jelly-blob fixed left-0 top-0 rounded-full will-change-transform z-[999]",
-          "pointer-events-none translate-x-[-50%] translate-y-[-50%]"
+          "jelly-blob fixed left-0 top-0 rounded-lg z-[999] pointer-events-none will-change-transform",
+          "translate-x-[-50%] translate-y-[-50%]"
         )}
         style={{
           zIndex: 100,
-          backdropFilter: isHovering ? "" : "invert(100%)",
+          backdropFilter: "invert(100%)",
         }}
       ></div>
       <div
-        className="bg-black w-3 h-3 rounded-full fixed translate-x-[-50%] translate-y-[-50%] pointer-events-none"
-        style={{ top: y, left: x }}
+        className="w-3 h-3 rounded-full fixed translate-x-[-50%] translate-y-[-50%] pointer-events-none transition-none duration-300"
+        style={{
+          top: y,
+          left: x,
+          backdropFilter: "invert(100%)",
+        }}
       ></div>
     </>
   );
