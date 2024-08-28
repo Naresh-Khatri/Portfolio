@@ -5,23 +5,28 @@ import {
   createContext,
   ReactNode,
   useContext,
+  useRef,
 } from "react";
 import { AnimatePresence } from "framer-motion";
 
 import Loader from "./loader";
+import gsap from "gsap";
 
 type PreloaderContextType = {
   isLoading: boolean;
+  loadingPercent: number;
   setIsLoading: (isLoading: boolean) => void;
 };
 const INITIAL: PreloaderContextType = {
   isLoading: true,
+  loadingPercent: 0,
   setIsLoading: () => {},
 };
 export const preloaderContext = createContext<PreloaderContextType>(INITIAL);
 
 type PreloaderProps = {
   children: ReactNode;
+  disabled?: boolean;
 };
 
 export const usePreloader = () => {
@@ -31,22 +36,32 @@ export const usePreloader = () => {
   }
   return context;
 };
-function Preloader({ children }: PreloaderProps) {
+const LOADING_TIME = 2.5;
+function Preloader({ children, disabled = false }: PreloaderProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingPercent, setLoadingPercent] = useState(0);
 
+  const loadingPercentRef = useRef<{ value: number }>({ value: 0 });
   useEffect(() => {
-    (async () => {
-      setTimeout(() => {
+    gsap.to(loadingPercentRef.current, {
+      value: 100,
+      duration: LOADING_TIME,
+      ease: "slow(0.7,0.7,false)",
+      onUpdate: () => {
+        setLoadingPercent(loadingPercentRef.current.value);
+      },
+      onComplete: () => {
         setIsLoading(false);
-        document.body.style.cursor = "default";
         // observe: this change has not been observed for errors.
         // window.scrollTo(0, 0);
-      }, 2500);
-    })();
+      },
+    });
   }, []);
 
   return (
-    <preloaderContext.Provider value={{ isLoading, setIsLoading }}>
+    <preloaderContext.Provider
+      value={{ isLoading, setIsLoading, loadingPercent }}
+    >
       <AnimatePresence mode="wait">{isLoading && <Loader />}</AnimatePresence>
       {children}
     </preloaderContext.Provider>
