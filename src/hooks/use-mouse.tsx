@@ -7,7 +7,7 @@ export const useMouse = () => {
   const [acceleration, setAcceleration] = useState(0);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setX(e.clientX);
       setY(e.clientY);
       const acc = Math.abs(e.movementX) + Math.abs(e.movementY);
