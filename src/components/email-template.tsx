@@ -12,7 +12,7 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   message,
 }) => (
   <div>
-    <h1>Welcome, {fullName}!</h1>
+    <h1>from: {fullName}!</h1>
     <div className="text-red-500">{email} sent you a message</div>
     <blockquote>{message}</blockquote>
   </div>
