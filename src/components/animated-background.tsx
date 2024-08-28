@@ -8,6 +8,7 @@ import { Skill, SkillNames, SKILLS } from "@/data/constants";
 import { sleep } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePreloader } from "./preloader";
+import { CSSPlugin } from "gsap";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,6 +98,10 @@ const AnimatedBackground = () => {
     start: () => void;
     stop: () => void;
   }>();
+  const [keycapAnimtation, setKeycapAnimtation] = useState<{
+    start: () => void;
+    stop: () => void;
+  }>();
 
   const keyboardStates = (idx: number) => {
     return STATES[idx][isMobile ? "mobile" : "desktop"];
@@ -127,6 +132,23 @@ const AnimatedBackground = () => {
   }, [selectedSkill]);
 
   const rotateKeyboard = useRef<gsap.core.Tween>();
+  const teardownKeyboard = useRef<gsap.core.Tween>();
+  const setKeycapsToInitialPosition = () => {
+    if (!splineApp) return;
+    const objs = splineApp.getAllObjects();
+    const keycaps = objs.filter((obj) => obj.name === "keycap");
+    keycaps.forEach((keycap) => {
+      gsap.to(keycap.position, { y: 0, duration: 0.5 });
+    });
+  };
+  // initialize gsap animations
+  useEffect(() => {
+    handleSplineInteractions();
+    handleGsapAnimations();
+    setBongoAnimation(getBongoAnimation());
+    setKeycapAnimtation(getKeycapAnimation());
+  }, [splineApp]);
+
   useEffect(() => {
     (async () => {
       if (!splineApp) return;
@@ -141,13 +163,95 @@ const AnimatedBackground = () => {
         ease: "back.inOut",
         delay: 2.5,
       });
-      if (activeSection === "hero" || activeSection === "contact") {
+      teardownKeyboard.current = gsap.fromTo(
+        kbd.rotation,
+        {
+          y: 0,
+          // x: -Math.PI,
+          x: -Math.PI,
+          z: 0,
+        },
+        {
+          y: -Math.PI / 2,
+          duration: 5,
+          repeat: -1,
+          yoyo: true,
+          yoyoEase: true,
+          // ease: "none",
+          delay: 2.5,
+          immediateRender: false,
+          paused: true,
+        }
+      );
+      console.log(activeSection);
+      if (activeSection === "hero") {
         rotateKeyboard.current.restart();
+        teardownKeyboard.current.pause();
+
+        Object.values(SKILLS).forEach((skill) => {
+          const keycap = splineApp.findObjectByName(skill.name);
+          if (!keycap) return;
+          gsap.to(keycap.position, {
+            y: Math.random() * 200 + 200,
+            duration: Math.random() * 5 + 5,
+            repeat: -1,
+            delay: Math.random() * 100,
+            // ease: "back.inOut",
+            ease: "elastic.out(2,0.1)",
+            yoyo: true,
+          });
+        });
+      } else if (activeSection === "contact") {
+        rotateKeyboard.current.pause();
+        teardownKeyboard.current.restart();
+      } else if (activeSection === "contact") {
+        rotateKeyboard.current.pause();
+        // teardownKeyboard.current.restart();
+      } else if (activeSection === "contact") {
+        rotateKeyboard.current.pause();
+        // teardownKeyboard.current.restart();
+        let foo;
+        // while (activeSection === "contact") {
+        //   const randSkill =
+        //     Object.values(SKILLS)[
+        //       Math.floor(Math.random() * Object.keys(SKILLS).length)
+        //     ];
+        //   const keycap = splineApp.findObjectByName(randSkill.name);
+        //   if (!keycap) continue;
+        //   foo = gsap.to(keycap.position, {
+        //     y: -90,
+        //     duration: Math.random() * 0.2,
+        //     repeat: 1,
+        //     ease: "back.inOut",
+        //     yoyo: true,
+        //   });
+
+        //   await sleep(Math.random() * 300 + 200);
+        //   // await sleep(500);
+        //   if (foo) foo.kill();
+        //   // foo = gsap.to(keycap.position, {
+        //   //   y: 0,
+        //   //   duration: 0.2,
+        //   //   ease: "back.inOut",
+        //   // });
+        //   // // await sleep(Math.random() * 500);
+        //   // await sleep(500);
+        //   // if (foo) foo.kill();
+        // }
       } else {
         rotateKeyboard.current.pause();
+        teardownKeyboard.current.pause();
       }
       if (activeSection === "skills") {
+        setKeycapsToInitialPosition();
+        await sleep(300);
+        keycapAnimtation?.start();
+        setKeycapsToInitialPosition();
+        await sleep(300);
+        keycapAnimtation?.start();
       } else {
+        await sleep(300);
+        keycapAnimtation?.stop();
         splineApp.setVariable("kbd_val", "");
         splineApp.setVariable("desc", "");
       }
@@ -161,14 +265,10 @@ const AnimatedBackground = () => {
     })();
     return () => {
       if (rotateKeyboard.current) rotateKeyboard.current.kill();
+      if (teardownKeyboard.current) teardownKeyboard.current.kill();
     };
   }, [activeSection, splineApp]);
 
-  useEffect(() => {
-    handleSplineInteractions();
-    handleGsapAnimations();
-    setBongoAnimation(bongoCatAnimation());
-  }, [splineApp]);
   const { isLoading } = usePreloader();
   useEffect(() => {
     console.log(isLoading);
@@ -188,6 +288,7 @@ const AnimatedBackground = () => {
         keycap.visible = true;
       });
     } else {
+      console.log("desktop");
       const desktopKeyCaps = allObjects.filter(
         (obj) => obj.name === "keycap-desktop"
       );
@@ -310,7 +411,7 @@ const AnimatedBackground = () => {
       },
     });
   };
-  const bongoCatAnimation = () => {
+  const getBongoAnimation = () => {
     const framesParent = splineApp?.findObjectByName("bongo-cat");
     const frame1 = splineApp?.findObjectByName("frame-1");
     const frame2 = splineApp?.findObjectByName("frame-2");
@@ -337,6 +438,54 @@ const AnimatedBackground = () => {
       framesParent.visible = false;
       frame1.visible = false;
       frame2.visible = false;
+    };
+    return { start, stop };
+  };
+  const getKeycapAnimation = () => {
+    if (!splineApp) return;
+    const objs = splineApp.getAllObjects();
+    const keycaps = objs.filter((obj) => obj.name === "keycap");
+    if (!objs || !keycaps) return { start: () => {}, stop: () => {} };
+
+    let interval: NodeJS.Timeout;
+    let tweens: any;
+    const start = () => {
+      console.log("starting", keycaps);
+      keycaps.forEach((keycap) => {
+        const t = gsap.to(keycap, {
+          // y: 40,
+          y: Math.random() * 200 + 200,
+          duration: 5,
+          repeat: -1,
+          yoyo: true,
+          ease: "elastic.out(1,0.8)",
+        });
+        tweens.push(t);
+      });
+
+      // Object.values(SKILLS).forEach((skill) => {
+      //   const keycap = splineApp.findObjectByName(skill.name);
+      //   if (!keycap) return;
+      //   const t = gsap.to(keycap.position, {
+      //     y: Math.random() * 200 + 200,
+      //     duration: Math.random() * 5 + 5,
+      //     repeat: -1,
+      //     delay: Math.random() * 10,
+      //     // ease: "back.inOut",
+      //     ease: "elastic.out(1,0.8)",
+      //     yoyo: true,
+      //   });
+      //   tweens.push(t);
+      // });
+    };
+    const stop = () => {
+      console.log("stopping", keycaps);
+      gsap.to(keycaps, { y: 36, stagger: 0.1, duration: 0.5, yoyo: true });
+      setTimeout(() => {
+        if (tweens.length > 0) {
+          tweens.forEach((t: gsap.core.Tween) => t.kill());
+        }
+      }, 1000);
     };
     return { start, stop };
   };
