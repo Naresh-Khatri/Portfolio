@@ -52,13 +52,15 @@ const Hero = () => {
         <div className="mt-8 md:ml-1 flex flex-col gap-3">
           <Tooltip delayDuration={1000}>
             <TooltipTrigger asChild>
-              <Button
-                variant={"default"}
-                className="block w-full overflow-hidden"
-                // preventHoverAnimation
-              >
-                Hire Me
-              </Button>
+              <Link href={"#contact"}>
+                <Button
+                  variant={"default"}
+                  className="block w-full overflow-hidden"
+                  // preventHoverAnimation
+                >
+                  Hire Me
+                </Button>
+              </Link>
             </TooltipTrigger>
             <TooltipContent side="right" className="bg-white text-black">
               <p>pls 🥹 🙏</p>
