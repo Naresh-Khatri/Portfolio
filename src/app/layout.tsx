@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Footer from "@/components/footer/footer";
 import Script from "next/script";
+import Preloader from "@/components/preloader";
 
 export const metadata: Metadata = {
   title: "Naresh Khatri",
@@ -50,13 +51,15 @@ export default function RootLayout({
             className="fixed inset-0 -z-10 animate-fade-in"
             quantity={100}
           />
-          <TooltipProvider>
-            <Header />
-            {children}
-            <Footer />
-          </TooltipProvider>
-          <Toaster />
-          <ElasticCursor />
+          <Preloader>
+            <TooltipProvider>
+              <Header />
+              {children}
+              <Footer />
+            </TooltipProvider>
+            <Toaster />
+            <ElasticCursor />
+          </Preloader>
         </ThemeProvider>
       </body>
     </html>
