@@ -105,9 +105,9 @@ function ElasticCursor() {
     if (!isHovering && !isLoading) {
       set.x(pos.x);
       set.y(pos.y);
-      set.width(50 + scale * 350);
+      set.width(50 + scale * 300);
       set.r(rotation);
-      set.sx(1 + scale * 1.2);
+      set.sx(1 + scale);
       set.sy(1 - scale * 2);
     } else {
       set.r(0);
@@ -195,7 +195,7 @@ function ElasticCursor() {
         ref={jellyRef}
         id={"jelly-id"}
         className={cn(
-          `w-[${CURSOR_DIAMETER}px] h-[${CURSOR_DIAMETER}px] border-[.325rem] border-black dark:border-white`,
+          `w-[${CURSOR_DIAMETER}px] h-[${CURSOR_DIAMETER}px] border-2 border-black dark:border-white`,
           "jelly-blob fixed left-0 top-0 rounded-lg z-[999] pointer-events-none will-change-transform",
           "translate-x-[-50%] translate-y-[-50%]"
         )}
