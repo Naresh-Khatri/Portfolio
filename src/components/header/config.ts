@@ -8,17 +8,17 @@ const links: Link[] = [
   },
   {
     title: 'About',
-    href: '#about',
+    href: '/#about',
     thumbnail: '/assets/nav-link-previews/about.png'
   },
   {
     title: 'Skills',
-    href: '#skills',
+    href: '/#skills',
     thumbnail: '/assets/nav-link-previews/skills.png'
   },
   {
     title: 'Projects',
-    href: '#projects',
+    href: '/#projects',
     thumbnail: '/assets/nav-link-previews/projects.png'
   },
   // {
@@ -35,11 +35,10 @@ const links: Link[] = [
     title: 'Blogs',
     href: '/blogs',
     thumbnail: '/assets/nav-link-previews/blog.png',
-    target: '_blank'
   },
   {
     title: 'Contact',
-    href: '#contact',
+    href: '/#contact',
     thumbnail: '/assets/nav-link-previews/contact.png'
   }
 ];
