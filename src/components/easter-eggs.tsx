@@ -54,9 +54,6 @@ const EasterEggs = () => {
   return (
     <>
       <NyanCat />
-      <div className="fixed left-10 top-64">
-        {isDevToolsOpen ? "DevTools is open" : "DevTools is closed"}
-      </div>
     </>
   );
 };
