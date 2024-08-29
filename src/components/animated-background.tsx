@@ -217,8 +217,9 @@ const AnimatedBackground = () => {
 
   const { isLoading } = usePreloader();
   useEffect(() => {
-    if (!isLoading) revealKeyCaps();
-  }, [isLoading]);
+    if (!splineApp || isLoading) return;
+    revealKeyCaps();
+  }, [splineApp, isLoading]);
   const revealKeyCaps = async () => {
     if (!splineApp) return;
     const allObjects = splineApp.getAllObjects();
