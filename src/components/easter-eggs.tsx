@@ -1,3 +1,4 @@
+"use client";
 import { useDevToolsOpen } from "@/hooks/use-devtools-open";
 import React, { useEffect, useState } from "react";
 import NyanCat from "./nyan-cat";
@@ -18,7 +19,7 @@ const EasterEggs = () => {
     // );
     if (typeof console !== "undefined") {
       console.log(
-        "%cHey there, curious coder! 🕵️‍♀️\n" +
+        "%cWhoa, look at you! 🕵️‍♂️\n" +
           "You seem to have discovered the secret console! 🔍\n" +
           "Want to see some magic? ✨\n" +
           "Just call %cNaresh%c fn and hit enter! 🎩🐇",
