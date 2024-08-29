@@ -215,7 +215,7 @@ const AnimatedBackground = () => {
     };
   }, [activeSection, splineApp]);
 
-  const { isLoading } = usePreloader();
+  const { isLoading, bypassLoading } = usePreloader();
   useEffect(() => {
     if (!splineApp || isLoading) return;
     revealKeyCaps();
@@ -434,6 +434,7 @@ const AnimatedBackground = () => {
           ref={splineContainer}
           onLoad={(app: Application) => {
             setSplineApp(app);
+            bypassLoading();
           }}
           scene="/assets/skills-keyboard.spline"
         />

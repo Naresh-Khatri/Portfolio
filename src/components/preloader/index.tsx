@@ -15,12 +15,12 @@ import gsap from "gsap";
 type PreloaderContextType = {
   isLoading: boolean;
   loadingPercent: number;
-  setIsLoading: (isLoading: boolean) => void;
+  bypassLoading: () => void;
 };
 const INITIAL: PreloaderContextType = {
   isLoading: true,
   loadingPercent: 0,
-  setIsLoading: () => {},
+  bypassLoading: () => {},
 };
 export const preloaderContext = createContext<PreloaderContextType>(INITIAL);
 
@@ -40,10 +40,17 @@ const LOADING_TIME = 2.5;
 function Preloader({ children, disabled = false }: PreloaderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingPercent, setLoadingPercent] = useState(0);
+  const loadingTween = useRef<gsap.core.Tween>();
 
+  const bypassLoading = () => {
+    loadingTween.current?.progress(0.99).kill();
+    setLoadingPercent(100);
+    setIsLoading(false);
+    // console.log("killed", loadingTween.current);
+  };
   const loadingPercentRef = useRef<{ value: number }>({ value: 0 });
   useEffect(() => {
-    gsap.to(loadingPercentRef.current, {
+    loadingTween.current = gsap.to(loadingPercentRef.current, {
       value: 100,
       duration: LOADING_TIME,
       ease: "slow(0.7,0.7,false)",
@@ -60,7 +67,7 @@ function Preloader({ children, disabled = false }: PreloaderProps) {
 
   return (
     <preloaderContext.Provider
-      value={{ isLoading, setIsLoading, loadingPercent }}
+      value={{ isLoading, bypassLoading, loadingPercent }}
     >
       <AnimatePresence mode="wait">{isLoading && <Loader />}</AnimatePresence>
       {children}
