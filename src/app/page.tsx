@@ -27,7 +27,7 @@ function MainPage() {
 
           <section
             id="skills"
-            className="bg-iblue-400 w-full h-screen md:h-[180dvh]"
+            className="bg-iblue-400 w-full h-screen md:h-[150dvh]"
           >
             <div className="top-[70px] sticky mb-96">
               <h2
