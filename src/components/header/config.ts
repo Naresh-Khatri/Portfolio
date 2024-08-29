@@ -4,43 +4,43 @@ const links: Link[] = [
   {
     title: 'Home',
     href: '/',
-    thumbnail: 'home.jpg'
+    thumbnail: '/assets/nav-link-previews/landing.png'
   },
   {
     title: 'About',
     href: '#about',
-    thumbnail: 'about.jpg'
+    thumbnail: '/assets/nav-link-previews/about.png'
   },
   {
     title: 'Skills',
     href: '#skills',
-    thumbnail: 'about.jpg'
+    thumbnail: '/assets/nav-link-previews/skills.png'
   },
   {
     title: 'Projects',
     href: '#projects',
-    thumbnail: 'projects.jpg'
+    thumbnail: '/assets/nav-link-previews/projects.png'
   },
   // {
   //   title: 'Skills',
   //   href: '/skills',
-  //   thumbnail: 'skills.jpg'
+  //   thumbnail: '/assets/nav-link-previews/skills.png'
   // },
   // {
   //   title: 'Testimonials',
   //   href: '/testimonials',
-  //   thumbnail: 'testimonials.jpg'
+  //   thumbnail: '/assets/nav-link-previews/testimonials.png'
   // },
   {
     title: 'Blogs',
     href: '/blogs',
-    thumbnail: 'blog.jpg',
+    thumbnail: '/assets/nav-link-previews/blog.png',
     target: '_blank'
   },
   {
     title: 'Contact',
-    href: '/contact',
-    thumbnail: 'contact.jpg'
+    href: '#contact',
+    thumbnail: '/assets/nav-link-previews/contact.png'
   }
 ];
 
