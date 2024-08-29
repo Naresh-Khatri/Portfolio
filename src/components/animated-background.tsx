@@ -174,7 +174,6 @@ const AnimatedBackground = () => {
           paused: true,
         }
       );
-      console.log(activeSection);
       if (activeSection === "hero") {
         rotateKeyboard.current.restart();
         teardownKeyboard.current.pause();
@@ -218,7 +217,6 @@ const AnimatedBackground = () => {
 
   const { isLoading } = usePreloader();
   useEffect(() => {
-    console.log(isLoading);
     if (!isLoading) revealKeyCaps();
   }, [isLoading]);
   const revealKeyCaps = async () => {
@@ -226,7 +224,6 @@ const AnimatedBackground = () => {
     const allObjects = splineApp.getAllObjects();
     const keycaps = allObjects.filter((obj) => obj.name === "keycap");
     await sleep(500);
-    console.log(isMobile);
     if (isMobile) {
       const mobileKeyCaps = allObjects.filter(
         (obj) => obj.name === "keycap-mobile"
@@ -235,7 +232,6 @@ const AnimatedBackground = () => {
         keycap.visible = true;
       });
     } else {
-      console.log("desktop");
       const desktopKeyCaps = allObjects.filter(
         (obj) => obj.name === "keycap-desktop"
       );
