@@ -402,7 +402,7 @@ const AnimatedBackground = () => {
             repeat: -1,
             yoyo: true,
             yoyoEase: "none",
-            ease: "elastic.out(1,0.8)",
+            ease: "elastic.out(1,0.3)",
           });
           tweens.push(t);
         });
