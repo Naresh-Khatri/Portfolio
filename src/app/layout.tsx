@@ -13,23 +13,60 @@ import Preloader from "@/components/preloader";
 import EasterEggs from "@/components/easter-eggs";
 
 export const metadata: Metadata = {
-  title: "Naresh Khatri",
-  description: "Portfolio",
+  title: "Naresh Khatri | Full-Stack Developer",
+  description:
+    "Explore the portfolio of Naresh, a full-stack developer and creative technologist specializing in interactive web experiences, 3D animations, and innovative projects. Discover my latest work, including Coding Ducks, The Booking Desk, Ghostchat, and more. Let's build something amazing together!",
+  keywords: [
+    "Naresh",
+    "portfolio",
+    "full-stack developer",
+    "creative technologist",
+    "web development",
+    "3D animations",
+    "interactive websites",
+    "Coding Ducks",
+    "The Booking Desk",
+    "Ghostchat",
+    "web design",
+    "GSAP",
+    "React",
+    "Next.js",
+    "Spline",
+    "Framer Motion",
+  ],
+  authors: [{ name: "Naresh" }],
+  openGraph: {
+    title: "Naresh's Portfolio | Full-Stack Developer",
+    description:
+      "Discover the portfolio of Naresh, a full-stack developer creating interactive web experiences and innovative projects.",
+    url: "https://nareshkhatri.site",
+    images: [
+      {
+        url: "/assets/seo/og-image.png",
+        width: 800,
+        height: 600,
+        alt: "Portfolio preview",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Naresh's Portfolio | Full-Stack Developer",
+    description:
+      "Explore Naresh's portfolio of interactive web experiences and innovative projects.",
+    images: ["/assets/seo/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
 const archivoBlack = Archivo_Black({
   subsets: ["latin"],
   weight: "400",
 });
-
-// const calSans = LocalFont({
-//   src: "../public/fonts/CalSans-SemiBold.ttf",
-//   variable: "--font-calsans",
-// });
 
 export default function RootLayout({
   children,
