@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { footer } from "./config";
+import { Button } from "../ui/button";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -9,7 +10,7 @@ function Footer() {
       <p className="text-xs text-gray-500 dark:text-gray-400">
         © {year} Naresh Khatri. All rights reserved.
       </p>
-      <nav className="flex gap-4 sm:ml-auto sm:gap-6">
+      <nav className="flex gap-4 sm:ml-auto sm:gap-6 z-10">
         {footer.map((link, index) => {
           const { title, href } = link;
 
@@ -19,7 +20,7 @@ function Footer() {
               href={href}
               key={`l_${index}`}
             >
-              {title}
+              <Button variant={"link"}>{title}</Button>
             </Link>
           );
         })}
