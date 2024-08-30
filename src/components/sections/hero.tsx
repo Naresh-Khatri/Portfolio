@@ -41,8 +41,8 @@ const Hero = () => {
                 Naresh <br className="md:block hiidden" /> Khatri
               </h1>
             </TooltipTrigger>
-            <TooltipContent side="top" className="bg-white text-black">
-            theres something waiting for you in devtools
+            <TooltipContent side="top" className="dark:bg-white dark:text-black">
+              theres something waiting for you in devtools
             </TooltipContent>
           </Tooltip>
           {/* <div className="md:block hidden bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-right animate-glow" /> */}
@@ -57,7 +57,7 @@ const Hero = () => {
         </div>
 
         <div className="mt-8 md:ml-1 flex flex-col gap-3">
-          <Tooltip delayDuration={1000}>
+          <Tooltip delayDuration={500}>
             <TooltipTrigger asChild>
               <Link href={"#contact"}>
                 <Button
@@ -69,7 +69,7 @@ const Hero = () => {
                 </Button>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right" className="bg-white text-black">
+            <TooltipContent side="right" >
               <p>pls 🥹 🙏</p>
             </TooltipContent>
           </Tooltip>
