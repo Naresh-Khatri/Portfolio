@@ -30,15 +30,17 @@ function MainPage() {
             className="bg-iblue-400 w-full h-screen md:h-[150dvh]"
           >
             <div className="top-[70px] sticky mb-96">
-              <h2
-                className={cn(
-                  "bg-clip-text text-4xl text-center text-transparent md:text-7xl",
-                  "bg-gradient-to-b from-black/80 to-black/50",
-                  "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 "
-                )}
-              >
-                SKILLS
-              </h2>
+              <Link href={"#skills"}>
+                <h2
+                  className={cn(
+                    "bg-clip-text text-4xl text-center text-transparent md:text-7xl",
+                    "bg-gradient-to-b from-black/80 to-black/50",
+                    "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 "
+                  )}
+                >
+                  SKILLS
+                </h2>
+              </Link>
               <p className="mx-auto mt-4 line-clamp-4 max-w-3xl font-normal text-base text-center text-neutral-300">
                 (hint: press a key)
               </p>
@@ -48,31 +50,35 @@ function MainPage() {
             id="projects"
             className="max-w-7xl mx-auto z-[9999] md:h-[130vh]"
           >
-            <h2
-              className={cn(
-                "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
-                "bg-gradient-to-b from-black/80 to-black/50",
-                "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 mb-32"
-              )}
-            >
-              Projects
-            </h2>
+            <Link href={"#skills"}>
+              <h2
+                className={cn(
+                  "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
+                  "bg-gradient-to-b from-black/80 to-black/50",
+                  "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 mb-32"
+                )}
+              >
+                Projects
+              </h2>
+            </Link>
             <Projects />
           </section>
           <section
             id="contact"
             className="min-h-screen max-w-7xl mx-auto z-[9999]"
           >
-            <h2
-              className={cn(
-                "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
-                "bg-gradient-to-b from-black/80 to-black/50",
-                "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50"
-              )}
-            >
-              LET&apos;S WORK <br />
-              TOGETHER
-            </h2>
+            <Link href={"#skills"}>
+              <h2
+                className={cn(
+                  "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
+                  "bg-gradient-to-b from-black/80 to-black/50",
+                  "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50"
+                )}
+              >
+                LET&apos;S WORK <br />
+                TOGETHER
+              </h2>
+            </Link>
             <Contact />
           </section>
         </main>
