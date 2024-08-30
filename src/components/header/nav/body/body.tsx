@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import styles from './style.module.scss';
-import { blur, translate } from '../../anim';
-import { Link as LinkType } from '@/types';
+import { motion } from "framer-motion";
+import Link from "next/link";
+import styles from "./style.module.scss";
+import { blur, translate } from "../../anim";
+import { Link as LinkType } from "@/types";
 
 interface SelectedLink {
   isActive: boolean;
@@ -20,13 +20,14 @@ export default function Body({
   links,
   selectedLink,
   setSelectedLink,
-  setIsActive
+  setIsActive,
 }: BodyProps) {
   const getChars = (word: string) => {
     let chars: JSX.Element[] = [];
-    word.split('').forEach((char, i) => {
+    word.split("").forEach((char, i) => {
       chars.push(
         <motion.span
+          className="pointer-events-none"
           custom={[i * 0.02, (word.length - i) * 0.01]}
           variants={translate}
           initial="initial"
@@ -47,7 +48,12 @@ export default function Body({
         const { title, href, target } = link;
 
         return (
-          <Link key={`l_${index}`} href={href} target={target}>
+          <Link
+            key={`l_${index}`}
+            href={href}
+            target={target}
+            className="cursor-can-hover"
+          >
             <motion.p
               onClick={() => setIsActive(false)}
               onMouseOver={() => setSelectedLink({ isActive: true, index })}
@@ -55,8 +61,8 @@ export default function Body({
               variants={blur}
               animate={
                 selectedLink.isActive && selectedLink.index !== index
-                  ? 'open'
-                  : 'closed'
+                  ? "open"
+                  : "closed"
               }
             >
               {getChars(title)}

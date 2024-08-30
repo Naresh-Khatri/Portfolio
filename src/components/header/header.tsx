@@ -7,6 +7,8 @@ import { opacity, background } from "./anim";
 import Nav from "./nav";
 import { cn } from "@/lib/utils";
 import FunnyThemeToggle from "../theme/funny-theme-toggle";
+import { Button } from "../ui/button";
+import { config } from "@/data/config";
 
 interface HeaderProps {
   loader?: boolean;
@@ -23,6 +25,8 @@ const Header = ({ loader }: HeaderProps) => {
       )}
       style={{
         background: isActive ? "hsl(var(--background) / .8)" : "transparent",
+        // backgroundImage:
+        //   "linear-gradient(0deg, rgba(0, 0, 0, 0), rgb(0, 0, 0))",
       }}
       initial={{
         y: -80,
@@ -35,15 +39,31 @@ const Header = ({ loader }: HeaderProps) => {
         duration: 0.8,
       }}
     >
+      {/* <div
+        className="absolute inset-0 "
+        style={{
+          mask: "linear-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 12.5%)",
+        }}
+      >
+      </div> */}
       <div className={styles.bar}>
         <Link href="/" className="flex items-center justify-center">
-          <span className="text-md transition-transform hover:translate-x-1 hover:translate-y-1">
-            Naresh Khatri
-          </span>
+          <Button variant={'link'} className="">
+            <span className="text-md">
+            {config.author}
+            </span>
+          </Button>
         </Link>
         <FunnyThemeToggle className="w-6 h-6 mr-4" />
-        <div onClick={() => setIsActive(!isActive)} className={styles.el}>
-          <div className={styles.label}>
+        <Button
+          variant={"ghost"}
+          onClick={() => setIsActive(!isActive)}
+          className={cn(
+            styles.el,
+            "m-0 p-0 h-6 bg-transparent flex items-center justify-center"
+          )}
+        >
+          <div className="relative flex items-center pointer-events-none">
             <motion.p
               variants={opacity}
               animate={!isActive ? "open" : "closed"}
@@ -59,7 +79,7 @@ const Header = ({ loader }: HeaderProps) => {
               isActive ? styles.burgerActive : ""
             }`}
           ></div>
-        </div>
+        </Button>
       </div>
       <motion.div
         variants={background}
