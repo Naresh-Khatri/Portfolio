@@ -30,14 +30,21 @@ const Hero = () => {
             Hi, I am
             <br className="md:hidden" />
           </p>
-          <h1
-            className={cn(
-              "font-thin text-6xl text-transparent text-slate-800 ml-1",
-              "cursor-default text-edge-outline font-display sm:text-7xl md:text-9xl "
-            )}
-          >
-            Naresh <br className="md:block hiidden" /> Khatri
-          </h1>
+          <Tooltip delayDuration={300}>
+            <TooltipTrigger asChild>
+              <h1
+                className={cn(
+                  "font-thin text-6xl text-transparent text-slate-800 ml-1",
+                  "cursor-default text-edge-outline font-display sm:text-7xl md:text-9xl "
+                )}
+              >
+                Naresh <br className="md:block hiidden" /> Khatri
+              </h1>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="bg-white text-black">
+            theres something waiting for you in devtools
+            </TooltipContent>
+          </Tooltip>
           {/* <div className="md:block hidden bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-right animate-glow" /> */}
           <p
             className={cn(
@@ -69,8 +76,9 @@ const Hero = () => {
           <div className="md:self-start flex gap-3">
             <Link
               href={
-                "https://drive.google.com/file/d/12cV9lMDqK5VxnMu2NxpdQt4WIOB-spaZ/view"
+                "https://drive.google.com/file/d/1O97WCk2DrO9x6SHOqf7LvRbmHkMgGIb4/view?usp=sharing"
               }
+              target="_blank"
             >
               <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
@@ -83,7 +91,7 @@ const Hero = () => {
                 </TooltipContent>
               </Tooltip>
             </Link>
-            <Link href={"https://github.com/Naresh-Khatri"}>
+            <Link href={"https://github.com/Naresh-Khatri"} target="_blank">
               <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
                   <Button>
@@ -95,7 +103,10 @@ const Hero = () => {
                 </TooltipContent>
               </Tooltip>
             </Link>
-            <Link href={"https://www.linkedin.com/in/naresh-khatri/"}>
+            <Link
+              href={"https://www.linkedin.com/in/naresh-khatri/"}
+              target="_blank"
+            >
               <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
                   <Button>
