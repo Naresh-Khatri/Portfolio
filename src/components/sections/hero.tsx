@@ -41,7 +41,10 @@ const Hero = () => {
                 Naresh <br className="md:block hiidden" /> Khatri
               </h1>
             </TooltipTrigger>
-            <TooltipContent side="top" className="dark:bg-white dark:text-black">
+            <TooltipContent
+              side="top"
+              className="dark:bg-white dark:text-black"
+            >
               theres something waiting for you in devtools
             </TooltipContent>
           </Tooltip>
@@ -57,66 +60,45 @@ const Hero = () => {
         </div>
 
         <div className="mt-8 md:ml-1 flex flex-col gap-3">
-          <Tooltip delayDuration={500}>
-            <TooltipTrigger asChild>
-              <Link href={"#contact"}>
-                <Button
-                  variant={"default"}
-                  className="block w-full overflow-hidden"
-                  // preventHoverAnimation
-                >
-                  Hire Me
-                </Button>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right" >
-              <p>pls 🥹 🙏</p>
-            </TooltipContent>
-          </Tooltip>
+          <Link
+            href={
+              "https://drive.google.com/file/d/1O97WCk2DrO9x6SHOqf7LvRbmHkMgGIb4/view?usp=sharing"
+            }
+            target="_blank"
+            className="flex-1"
+          >
+            <Button className="flex items-center gap-2 w-full">
+              <File size={24} className="pointer-events-none" /> Resume
+            </Button>
+          </Link>
           <div className="md:self-start flex gap-3">
-            <Link
-              href={
-                "https://drive.google.com/file/d/1O97WCk2DrO9x6SHOqf7LvRbmHkMgGIb4/view?usp=sharing"
-              }
-              target="_blank"
-            >
-              <Tooltip delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Button className="flex items-center gap-2 ">
-                    <File size={24} /> Resume
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger asChild>
+                <Link href={"#contact"}>
+                  <Button
+                    variant={"outline"}
+                    className="block w-full overflow-hidden"
+                  >
+                    Hire Me
                   </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  <p>Click to see my resume</p>
-                </TooltipContent>
-              </Tooltip>
-            </Link>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <p>pls 🥹 🙏</p>
+              </TooltipContent>
+            </Tooltip>
             <Link href={"https://github.com/Naresh-Khatri"} target="_blank">
-              <Tooltip delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Button>
-                    <Github size={24} fill="#000" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  <p>This is my Github profile</p>
-                </TooltipContent>
-              </Tooltip>
+              <Button variant={"outline"}>
+                <Github size={24} fill="#000" />
+              </Button>
             </Link>
             <Link
               href={"https://www.linkedin.com/in/naresh-khatri/"}
               target="_blank"
             >
-              <Tooltip delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Button>
-                    <Linkedin size={24} />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  <p>Welcome to my LinkedIn</p>
-                </TooltipContent>
-              </Tooltip>
+              <Button variant={"outline"}>
+                <Linkedin size={24} />
+              </Button>
             </Link>
           </div>
         </div>
