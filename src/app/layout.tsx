@@ -65,7 +65,11 @@ export default function RootLayout({
         {/* <Analytics /> */}
       </head>
       <body>
-        <ThemeProvider attribute="class" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
           <Particles
             className="fixed inset-0 -z-10 animate-fade-in"
             quantity={100}
