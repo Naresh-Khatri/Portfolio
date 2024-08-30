@@ -10,10 +10,6 @@ const NotFoundPage = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <Spline scene="/assets/404.spline" />
       </Suspense>
-      <NyanCat />
-      <div className={cn("h-[calc(100dvh-8rem)] z-[2] pt-16")}>
-        NotFoundPage
-      </div>
     </>
   );
 };
