@@ -23,7 +23,7 @@ const config = {
     "Spline",
     "Framer Motion",
   ],
-  author: "Naresh",
+  author: "Naresh Khatri",
   site: "https://nareshkhatri.site",
 
   get ogImg() {
