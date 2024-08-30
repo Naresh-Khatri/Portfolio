@@ -48,10 +48,8 @@ const Header = ({ loader }: HeaderProps) => {
       </div> */}
       <div className={styles.bar}>
         <Link href="/" className="flex items-center justify-center">
-          <Button variant={'link'} className="">
-            <span className="text-md">
+          <Button variant={"link"} className="text-md">
             {config.author}
-            </span>
           </Button>
         </Link>
         <FunnyThemeToggle className="w-6 h-6 mr-4" />
