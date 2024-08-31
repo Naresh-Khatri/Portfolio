@@ -1,25 +1,21 @@
 import { useEffect, useState } from "react";
+import { addListener, launch, stop } from "devtools-detector";
 
 export const useDevToolsOpen = () => {
   const [isDevToolsOpen, setIsDevToolsOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const detectDevTools = () => {
-      const threshold = 160; // Approximate height of the DevTools bar
-      const itIsOpen =
-        window.outerHeight - window.innerHeight > threshold ||
-        window.outerWidth - window.innerWidth > threshold;
-
-      if (itIsOpen) {
+    addListener((isOpen) => {
+      if (isOpen) {
         setIsDevToolsOpen(true);
-      } else {
-        setIsDevToolsOpen(false);
+        stop();
       }
+    });
+    launch();
+    return () => {
+      stop();
     };
-
-    window.addEventListener("resize", detectDevTools);
-    detectDevTools();
-  });
+  }, []);
   return { isDevToolsOpen };
 };

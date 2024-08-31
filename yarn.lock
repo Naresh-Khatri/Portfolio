@@ -628,9 +628,9 @@
     thumbhash "0.1.1"
 
 "@splinetool/runtime@^1.9.3":
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/@splinetool/runtime/-/runtime-1.9.3.tgz#d7b1d8c29bfd363b41bcc301a0bef5a7b8e35cc8"
-  integrity sha512-wcSxsRUpZRzPqX3/4UHlN5H1hOBoBiut9VRr8f7KG6d/joDahLP2MnWF8/7eoOuWAA+DC08hQhfdl9b45PFlIA==
+  version "1.9.21"
+  resolved "https://registry.yarnpkg.com/@splinetool/runtime/-/runtime-1.9.21.tgz#f1779bb8296512e4f5602f380bc241607df88e72"
+  integrity sha512-kjpexZUlJ4bCEvYd4ddvuKEnNA3iozVk6cZJ8xUOnvgG4nZ1XcuJ3LbT24bwbfCDL7/e+aLDkN+r3YrzOv/lIQ==
   dependencies:
     on-change "^4.0.0"
     semver-compare "^1.0.0"
@@ -1138,6 +1138,11 @@ commander@^4.0.0:
   resolved "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
 
+compare-versions@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-3.6.0.tgz#1a5689913685e5a87637b8d3ffca75514ec41d62"
+  integrity sha512-W6Af2Iw1z4CB7q4uU4hv646dW9GQuBM+YpC0UvUCWSD8w90SJjp+ujJuXaEMtAXBtSqGfMPuFOVn4/+FlaqfBA==
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
@@ -1258,6 +1263,13 @@ detect-node-es@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/detect-node-es/-/detect-node-es-1.1.0.tgz#163acdf643330caa0b4cd7c21e7ee7755d6fa493"
   integrity sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==
+
+devtools-detector@^2.0.22:
+  version "2.0.22"
+  resolved "https://registry.yarnpkg.com/devtools-detector/-/devtools-detector-2.0.22.tgz#15b9e7e73d7e641f8c040e49f90105b31bce30a4"
+  integrity sha512-m5Smh4pnrpoS1IROPruIogDQ+gCUu9CO2bAJtIo003OLJFBd3OCpSLVM5CgqPnEOF75jFFze61twLD5NgLguiA==
+  dependencies:
+    compare-versions "^3.6.0"
 
 didyoumean@^1.2.2:
   version "1.2.2"
