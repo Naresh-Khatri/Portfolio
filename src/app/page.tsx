@@ -12,17 +12,21 @@ import Hero from "@/components/sections/hero";
 import AnimatedBackground from "@/components/animated-background";
 import Footer from "@/components/footer/footer";
 import Contact from "@/components/sections/contact";
+import ScrollDownIcon from "@/components/scroll-down-icon";
 
 function MainPage() {
   return (
     <>
       <SmoothScroll>
         <main className={cn("bg-slate-100 dark:bg-transparent")}>
-          <div className="top-0 z-[0] fixed w-full h-screen">
+          <div className="top-0 z-0 fixed w-full h-screen">
             <AnimatedBackground />
           </div>
           <section id="hero" className={cn("relative w-full h-screen")}>
             <Hero />
+            <div className="absolute bottom-10 left-[50%] translate-x-[-50%]">
+              <ScrollDownIcon />
+            </div>
           </section>
 
           <section
@@ -46,11 +50,8 @@ function MainPage() {
               </p>
             </div>
           </section>
-          <section
-            id="projects"
-            className="max-w-7xl mx-auto z-[9999] md:h-[130vh]"
-          >
-            <Link href={"#skills"}>
+          <section id="projects" className="max-w-7xl mx-auto md:h-[130vh]">
+            <Link href={"#projects"}>
               <h2
                 className={cn(
                   "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
@@ -63,11 +64,8 @@ function MainPage() {
             </Link>
             <Projects />
           </section>
-          <section
-            id="contact"
-            className="min-h-screen max-w-7xl mx-auto z-[9999]"
-          >
-            <Link href={"#skills"}>
+          <section id="contact" className="min-h-screen max-w-7xl mx-auto ">
+            <Link href={"#contact"}>
               <h2
                 className={cn(
                   "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
