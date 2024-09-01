@@ -445,7 +445,7 @@ const AnimatedBackground = () => {
         const keycap = splineApp.findObjectByName(skill.name);
         if (!keycap) return;
         const t = gsap.to(keycap?.position, {
-          y: 50,
+          y: 0,
           duration: 4,
           repeat: 1,
           ease: "elastic.out(1,0.8)",
