@@ -11,6 +11,7 @@ import {
 import ContactForm from "../ContactForm";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { config } from "@/data/config";
 const ContactSection = () => {
   return (
     <section id="contact" className="min-h-screen max-w-7xl mx-auto ">
@@ -31,8 +32,15 @@ const ContactSection = () => {
           <CardHeader>
             <CardTitle className="text-4xl">Contact Form</CardTitle>
             <CardDescription>
-              Need to chat? Drop your info here, and I&apos;ll get back to you
-              faster than you can swipe through TikTok. No cap, just real talk!
+              Please contact me directly at{" "}
+              <a
+                target="_blank"
+                href={`mailto:${config.email}`}
+                className="text-gray-200 cursor-can-hover rounded-lg"
+              >
+                {config.email.replace(/@/g, "(at)")}
+              </a>{" "}
+              or drop your info here.
             </CardDescription>
           </CardHeader>
           <CardContent>
