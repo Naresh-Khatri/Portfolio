@@ -147,6 +147,13 @@ const AnimatedBackground = () => {
       !textMobileLight
     )
       return;
+    if (activeSection !== "skills") {
+      textDesktopDark.visible = false;
+      textDesktopLight.visible = false;
+      textMobileDark.visible = false;
+      textMobileLight.visible = false;
+      return;
+    }
     if (theme === "dark" && !isMobile) {
       textDesktopDark.visible = false;
       textDesktopLight.visible = true;
@@ -168,10 +175,8 @@ const AnimatedBackground = () => {
       textMobileDark.visible = true;
       textMobileLight.visible = false;
     }
-  }, [theme, splineApp, isMobile]);
+  }, [theme, splineApp, isMobile, activeSection]);
 
-  const rotateKeyboard = useRef<gsap.core.Tween>();
-  const teardownKeyboard = useRef<gsap.core.Tween>();
   // initialize gsap animations
   useEffect(() => {
     handleSplineInteractions();
@@ -181,11 +186,13 @@ const AnimatedBackground = () => {
   }, [splineApp]);
 
   useEffect(() => {
+    let rotateKeyboard: gsap.core.Tween;
+    let teardownKeyboard: gsap.core.Tween;
     (async () => {
       if (!splineApp) return;
       const kbd: SPEObject | undefined = splineApp.findObjectByName("keyboard");
       if (!kbd) return;
-      rotateKeyboard.current = gsap.to(kbd.rotation, {
+      rotateKeyboard = gsap.to(kbd.rotation, {
         y: Math.PI * 2 + kbd.rotation.y,
         duration: 10,
         repeat: -1,
@@ -194,7 +201,7 @@ const AnimatedBackground = () => {
         ease: "back.inOut",
         delay: 2.5,
       });
-      teardownKeyboard.current = gsap.fromTo(
+      teardownKeyboard = gsap.fromTo(
         kbd.rotation,
         {
           y: 0,
@@ -215,19 +222,19 @@ const AnimatedBackground = () => {
         }
       );
       if (activeSection === "hero") {
-        rotateKeyboard.current.restart();
-        teardownKeyboard.current.pause();
+        rotateKeyboard.restart();
+        teardownKeyboard.pause();
       } else if (activeSection === "contact") {
-        rotateKeyboard.current.pause();
-        teardownKeyboard.current.restart();
+        rotateKeyboard.pause();
+        teardownKeyboard.restart();
       } else if (activeSection === "contact") {
-        rotateKeyboard.current.pause();
-        teardownKeyboard.current.restart();
+        rotateKeyboard.pause();
+        teardownKeyboard.restart();
       } else if (activeSection === "contact") {
-        rotateKeyboard.current.pause();
+        rotateKeyboard.pause();
       } else {
-        rotateKeyboard.current.pause();
-        teardownKeyboard.current.pause();
+        rotateKeyboard.pause();
+        teardownKeyboard.pause();
       }
       if (activeSection === "skills") {
       } else {
@@ -250,8 +257,8 @@ const AnimatedBackground = () => {
       }
     })();
     return () => {
-      if (rotateKeyboard.current) rotateKeyboard.current.kill();
-      if (teardownKeyboard.current) teardownKeyboard.current.kill();
+      if (rotateKeyboard) rotateKeyboard.kill();
+      if (teardownKeyboard) teardownKeyboard.kill();
     };
   }, [activeSection, splineApp]);
 
@@ -294,15 +301,6 @@ const AnimatedBackground = () => {
   };
   const handleSplineInteractions = () => {
     if (!splineApp) return;
-    // show either desktop text or mobile text
-    // if (isMobile) {
-    //   const text = splineApp.findObjectByName("text-mobile");
-    //   if (text) text.visible = true;
-    // } else {
-    //   const text = splineApp.findObjectByName("text-desktop");
-    //   if (text) text.visible = true;
-    // }
-
     splineApp.addEventListener("keyUp", (e) => {
       if (!splineApp) return;
       splineApp.setVariable("heading", "");
@@ -374,7 +372,7 @@ const AnimatedBackground = () => {
     gsap.timeline({
       scrollTrigger: {
         trigger: "#contact",
-        start: "top 50%",
+        start: "top 30%",
         end: "bottom bottom",
         scrub: true,
         // markers: true,
