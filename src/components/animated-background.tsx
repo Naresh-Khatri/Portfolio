@@ -226,12 +226,6 @@ const AnimatedBackground = () => {
         teardownKeyboard.pause();
       } else if (activeSection === "contact") {
         rotateKeyboard.pause();
-        teardownKeyboard.restart();
-      } else if (activeSection === "contact") {
-        rotateKeyboard.pause();
-        teardownKeyboard.restart();
-      } else if (activeSection === "contact") {
-        rotateKeyboard.pause();
       } else {
         rotateKeyboard.pause();
         teardownKeyboard.pause();
