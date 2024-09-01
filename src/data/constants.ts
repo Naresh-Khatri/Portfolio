@@ -228,7 +228,8 @@ using use = useUsing("use")`,
     id: 24,
     name: "vercel",
     label: "Vercel",
-    shortDescription: "deploy and go touch grass, respectfully! 🚀🌿",
+    shortDescription:
+      "The triangle compony, helps you deploy and go touch grass! 🚀🌿",
     color: "#6cc24a",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
   },
@@ -249,4 +250,11 @@ export const themeDisclaimers = {
     "Welcome back to the shadows. How was life out there in the light?",
     "Dark mode on! Finally, someone who understands true sophistication.",
   ],
+};
+
+export const socialLinks = {
+  github: "https://github.com/Naresh-Khatri",
+  linkedin: "https://www.linkedin.com/in/naresh-khatri/",
+  twitter: "https://x.com/nothotchaddi",
+  instagram: "https://www.instagram.com/hotchaddi",
 };
