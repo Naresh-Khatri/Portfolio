@@ -13,14 +13,28 @@ import Link from "next/link";
 
 import SmoothScroll from "../smooth-scroll";
 import projects, { Project } from "@/data/projects";
+import { cn } from "@/lib/utils";
 
-const Projects = () => {
+const ProjectsSection = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3">
-      {projects.map((project, index) => (
-        <Modall key={project.src} project={project} />
-      ))}
-    </div>
+    <section id="projects" className="max-w-7xl mx-auto md:h-[130vh]">
+      <Link href={"#projects"}>
+        <h2
+          className={cn(
+            "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
+            "bg-gradient-to-b from-black/80 to-black/50",
+            "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 mb-32"
+          )}
+        >
+          Projects
+        </h2>
+      </Link>
+      <div className="grid grid-cols-1 md:grid-cols-3">
+        {projects.map((project, index) => (
+          <Modall key={project.src} project={project} />
+        ))}
+      </div>
+    </section>
   );
 };
 const Modall = ({ project }: { project: Project }) => {
@@ -70,7 +84,7 @@ const Modall = ({ project }: { project: Project }) => {
     </div>
   );
 };
-export default Projects;
+export default ProjectsSection;
 
 const ProjectContents = ({ project }: { project: Project }) => {
   return (

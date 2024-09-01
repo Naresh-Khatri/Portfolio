@@ -1,18 +1,13 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import SmoothScroll from "@/components/smooth-scroll";
-import Preloader from "@/components/preloader";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import About from "@/app/about/page";
-import Projects from "@/components/sections/projects";
-import Hero from "@/components/sections/hero";
 import AnimatedBackground from "@/components/animated-background";
-import Footer from "@/components/footer/footer";
-import Contact from "@/components/sections/contact";
-import ScrollDownIcon from "@/components/scroll-down-icon";
+import SkillsSection from "@/components/sections/skills";
+import ProjectsSection from "@/components/sections/projects";
+import ContactSection from "@/components/sections/contact";
+import HeroSection from "@/components/sections/hero";
 
 function MainPage() {
   return (
@@ -22,63 +17,10 @@ function MainPage() {
           <div className="top-0 z-0 fixed w-full h-screen">
             <AnimatedBackground />
           </div>
-          <section id="hero" className={cn("relative w-full h-screen")}>
-            <Hero />
-            <div className="absolute bottom-10 left-[50%] translate-x-[-50%]">
-              <ScrollDownIcon />
-            </div>
-          </section>
-
-          <section
-            id="skills"
-            className="bg-iblue-400 w-full h-screen md:h-[150dvh]"
-          >
-            <div className="top-[70px] sticky mb-96">
-              <Link href={"#skills"}>
-                <h2
-                  className={cn(
-                    "bg-clip-text text-4xl text-center text-transparent md:text-7xl",
-                    "bg-gradient-to-b from-black/80 to-black/50",
-                    "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 "
-                  )}
-                >
-                  SKILLS
-                </h2>
-              </Link>
-              <p className="mx-auto mt-4 line-clamp-4 max-w-3xl font-normal text-base text-center text-neutral-300">
-                (hint: press a key)
-              </p>
-            </div>
-          </section>
-          <section id="projects" className="max-w-7xl mx-auto md:h-[130vh]">
-            <Link href={"#projects"}>
-              <h2
-                className={cn(
-                  "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
-                  "bg-gradient-to-b from-black/80 to-black/50",
-                  "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50 mb-32"
-                )}
-              >
-                Projects
-              </h2>
-            </Link>
-            <Projects />
-          </section>
-          <section id="contact" className="min-h-screen max-w-7xl mx-auto ">
-            <Link href={"#contact"}>
-              <h2
-                className={cn(
-                  "bg-clip-text text-4xl text-center text-transparent md:text-7xl pt-16",
-                  "bg-gradient-to-b from-black/80 to-black/50",
-                  "dark:bg-gradient-to-b dark:from-white/80 dark:to-white/20 dark:bg-opacity-50"
-                )}
-              >
-                LET&apos;S WORK <br />
-                TOGETHER
-              </h2>
-            </Link>
-            <Contact />
-          </section>
+          <HeroSection />
+          <SkillsSection />
+          <ProjectsSection />
+          <ContactSection />
         </main>
       </SmoothScroll>
     </>
