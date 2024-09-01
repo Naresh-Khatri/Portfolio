@@ -8,6 +8,7 @@ import { Skill, SkillNames, SKILLS } from "@/data/constants";
 import { sleep } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePreloader } from "./preloader";
+import { useTheme } from "next-themes";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,6 +88,8 @@ const STATES = [
 ];
 
 const AnimatedBackground = () => {
+  const { isLoading, bypassLoading } = usePreloader();
+  const { theme } = useTheme();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const splineContainer = useRef<HTMLDivElement>(null);
   const [splineApp, setSplineApp] = useState<Application>();
@@ -111,8 +114,8 @@ const AnimatedBackground = () => {
 
     if (e.target.name === "body" || e.target.name === "platform") {
       setSelectedSkill(null);
-      if (splineApp.getVariable("kbd_val") && splineApp.getVariable("desc")) {
-        splineApp.setVariable("kbd_val", "");
+      if (splineApp.getVariable("heading") && splineApp.getVariable("desc")) {
+        splineApp.setVariable("heading", "");
         splineApp.setVariable("desc", "");
       }
     } else {
@@ -126,9 +129,46 @@ const AnimatedBackground = () => {
   // handle keyboard press interaction
   useEffect(() => {
     if (!selectedSkill || !splineApp) return;
-    splineApp.setVariable("kbd_val", selectedSkill.label);
+    splineApp.setVariable("heading", selectedSkill.label);
     splineApp.setVariable("desc", selectedSkill.shortDescription);
   }, [selectedSkill]);
+
+  // handle keyboard heading and desc visibility
+  useEffect(() => {
+    if (!splineApp) return;
+    const textDesktopDark = splineApp.findObjectByName("text-desktop-dark");
+    const textDesktopLight = splineApp.findObjectByName("text-desktop");
+    const textMobileDark = splineApp.findObjectByName("text-mobile-dark");
+    const textMobileLight = splineApp.findObjectByName("text-mobile");
+    if (
+      !textDesktopDark ||
+      !textDesktopLight ||
+      !textMobileDark ||
+      !textMobileLight
+    )
+      return;
+    if (theme === "dark" && !isMobile) {
+      textDesktopDark.visible = false;
+      textDesktopLight.visible = true;
+      textMobileDark.visible = false;
+      textMobileLight.visible = false;
+    } else if (theme === "dark" && isMobile) {
+      textDesktopDark.visible = false;
+      textDesktopLight.visible = false;
+      textMobileDark.visible = false;
+      textMobileLight.visible = true;
+    } else if (theme === "light" && !isMobile) {
+      textDesktopDark.visible = true;
+      textDesktopLight.visible = false;
+      textMobileDark.visible = false;
+      textMobileLight.visible = false;
+    } else {
+      textDesktopDark.visible = false;
+      textDesktopLight.visible = false;
+      textMobileDark.visible = true;
+      textMobileLight.visible = false;
+    }
+  }, [theme, splineApp, isMobile]);
 
   const rotateKeyboard = useRef<gsap.core.Tween>();
   const teardownKeyboard = useRef<gsap.core.Tween>();
@@ -191,7 +231,7 @@ const AnimatedBackground = () => {
       }
       if (activeSection === "skills") {
       } else {
-        splineApp.setVariable("kbd_val", "");
+        splineApp.setVariable("heading", "");
         splineApp.setVariable("desc", "");
       }
       if (activeSection === "projects") {
@@ -215,7 +255,7 @@ const AnimatedBackground = () => {
     };
   }, [activeSection, splineApp]);
 
-  const { isLoading, bypassLoading } = usePreloader();
+  //reveal keycaps
   useEffect(() => {
     if (!splineApp || isLoading) return;
     revealKeyCaps();
@@ -255,24 +295,24 @@ const AnimatedBackground = () => {
   const handleSplineInteractions = () => {
     if (!splineApp) return;
     // show either desktop text or mobile text
-    if (isMobile) {
-      const text = splineApp.findObjectByName("text-mobile");
-      if (text) text.visible = true;
-    } else {
-      const text = splineApp.findObjectByName("text-desktop");
-      if (text) text.visible = true;
-    }
+    // if (isMobile) {
+    //   const text = splineApp.findObjectByName("text-mobile");
+    //   if (text) text.visible = true;
+    // } else {
+    //   const text = splineApp.findObjectByName("text-desktop");
+    //   if (text) text.visible = true;
+    // }
 
     splineApp.addEventListener("keyUp", (e) => {
       if (!splineApp) return;
-      splineApp.setVariable("kbd_val", "");
+      splineApp.setVariable("heading", "");
       splineApp.setVariable("desc", "");
     });
     splineApp.addEventListener("keyDown", (e) => {
       if (!splineApp) return;
       const skill = SKILLS[e.target.name as SkillNames];
       if (skill) setSelectedSkill(skill);
-      splineApp.setVariable("kbd_val", skill.label);
+      splineApp.setVariable("heading", skill.label);
       splineApp.setVariable("desc", skill.shortDescription);
     });
     splineApp.addEventListener("mouseHover", handleMouseHover);
