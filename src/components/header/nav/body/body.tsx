@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "./style.module.scss";
 import { blur, translate } from "../../anim";
 import { Link as LinkType } from "@/types";
+import { cn } from "@/lib/utils";
 
 interface SelectedLink {
   isActive: boolean;
@@ -43,7 +44,7 @@ export default function Body({
   };
 
   return (
-    <div className={styles.body}>
+    <div className={cn(styles.body, 'flex flex-col items-end md:flex-row')}>
       {links.map((link, index) => {
         const { title, href, target } = link;
 
@@ -52,9 +53,10 @@ export default function Body({
             key={`l_${index}`}
             href={href}
             target={target}
-            className="cursor-can-hover"
+            className="cursor-can-hover rounded-lg"
           >
             <motion.p
+            className="rounded-lg"
               onClick={() => setIsActive(false)}
               onMouseOver={() => setSelectedLink({ isActive: true, index })}
               onMouseLeave={() => setSelectedLink({ isActive: false, index })}
