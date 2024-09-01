@@ -4,6 +4,8 @@ import styles from "./style.module.scss";
 import { blur, translate } from "../../anim";
 import { Link as LinkType } from "@/types";
 import { cn } from "@/lib/utils";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface SelectedLink {
   isActive: boolean;
@@ -23,6 +25,14 @@ export default function Body({
   setSelectedLink,
   setIsActive,
 }: BodyProps) {
+  const params = useParams();
+  const [currentHref, setCurrentHref] = useState("/");
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const { pathname, hash } = window.location;
+    setCurrentHref(pathname + hash);
+  }, [params]);
+
   const getChars = (word: string) => {
     let chars: JSX.Element[] = [];
     word.split("").forEach((char, i) => {
@@ -44,7 +54,7 @@ export default function Body({
   };
 
   return (
-    <div className={cn(styles.body, 'flex flex-col items-end md:flex-row')}>
+    <div className={cn(styles.body, "flex flex-col items-end md:flex-row")}>
       {links.map((link, index) => {
         const { title, href, target } = link;
 
@@ -56,7 +66,10 @@ export default function Body({
             className="cursor-can-hover rounded-lg"
           >
             <motion.p
-            className="rounded-lg"
+              className={cn(
+                "rounded-lg",
+                currentHref !== href ? "text-muted-foreground" : ""
+              )}
               onClick={() => setIsActive(false)}
               onMouseOver={() => setSelectedLink({ isActive: true, index })}
               onMouseLeave={() => setSelectedLink({ isActive: false, index })}
