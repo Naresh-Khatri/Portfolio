@@ -73,7 +73,7 @@ const Hero = () => {
           </div>
         )}
 
-        <div className="mt-8 md:ml-1 flex flex-col gap-3">
+        <div className="mt-8 md:ml-2 flex flex-col gap-3">
           <Link
             href={
               "https://drive.google.com/file/d/1O97WCk2DrO9x6SHOqf7LvRbmHkMgGIb4/view?usp=sharing"
@@ -82,7 +82,8 @@ const Hero = () => {
             className="flex-1"
           >
             <Button className="flex items-center gap-2 w-full">
-              <File size={24} className="pointer-events-none" /> Resume
+              <File size={24} />
+              <p>Resume</p>
             </Button>
           </Link>
           <div className="md:self-start flex gap-3">

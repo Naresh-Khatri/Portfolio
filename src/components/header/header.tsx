@@ -61,7 +61,7 @@ const Header = ({ loader }: HeaderProps) => {
             "m-0 p-0 h-6 bg-transparent flex items-center justify-center"
           )}
         >
-          <div className="relative flex items-center pointer-events-none">
+          <div className="relative flex items-center">
             <motion.p
               variants={opacity}
               animate={!isActive ? "open" : "closed"}
