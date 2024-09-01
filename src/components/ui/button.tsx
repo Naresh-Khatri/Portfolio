@@ -1,8 +1,15 @@
-import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import {
+  Children,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  type ButtonHTMLAttributes,
+  type ReactNode,
+} from "react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -34,34 +41,44 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
-  preventHoverAnimation?: boolean;
+  children?: ReactNode;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      asChild = false,
-      preventHoverAnimation = false,
-      ...props
-    },
-    ref
-  ) => {
+const addClassNameRecursively = (
+  children: ReactNode,
+  className: string
+): ReactNode => {
+  const foo = (child: ReactNode) => {
+    console.log(child);
+    if (!isValidElement(child)) return child;
+
+    return cloneElement(child, {
+      // @ts-ignore
+      className: `${child.props.className || ""} ${className}`.trim(),
+      children: addClassNameRecursively(child.props.children, className),
+    });
+  };
+  return Children.map(children, foo);
+};
+
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
         className={cn(
           buttonVariants({ variant, size, className }),
-          !preventHoverAnimation && "cursor-can-hover"
+          "cursor-can-hover"
         )}
         ref={ref}
         {...props}
-      />
+      >
+        {/* add pointer-events-none to every child recursively */}
+        {addClassNameRecursively(children, "pointer-events-none")}
+      </Comp>
     );
   }
 );
