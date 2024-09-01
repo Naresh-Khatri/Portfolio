@@ -9,11 +9,12 @@ import { sleep } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePreloader } from "./preloader";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STATES = [
-  {
+const STATES = {
+  hero: {
     desktop: {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
       position: { x: 400, y: -200, z: 0 },
@@ -25,7 +26,7 @@ const STATES = [
       rotation: { x: 0, y: 0, z: 0 },
     },
   },
-  {
+  about: {
     desktop: {
       scale: { x: 0.4, y: 0.4, z: 0.4 },
       position: { x: 0, y: -40, z: 0 },
@@ -45,7 +46,27 @@ const STATES = [
       },
     },
   },
-  {
+  skills: {
+    desktop: {
+      scale: { x: 0.4, y: 0.4, z: 0.4 },
+      position: { x: 0, y: -40, z: 0 },
+      rotation: {
+        x: 0,
+        y: Math.PI / 12,
+        z: 0,
+      },
+    },
+    mobile: {
+      scale: { x: 0.2, y: 0.2, z: 0.2 },
+      position: { x: 0, y: -40, z: 0 },
+      rotation: {
+        x: 0,
+        y: Math.PI / 6,
+        z: 0,
+      },
+    },
+  },
+  projects: {
     desktop: {
       scale: { x: 0.3, y: 0.3, z: 0.3 },
       position: { x: 0, y: -40, z: 0 },
@@ -65,7 +86,7 @@ const STATES = [
       },
     },
   },
-  {
+  contact: {
     desktop: {
       scale: { x: 0.3, y: 0.3, z: 0.3 },
       position: { x: 500, y: -250, z: 0 },
@@ -85,7 +106,9 @@ const STATES = [
       },
     },
   },
-];
+};
+
+type Section = "hero" | "about" | "skills" | "projects" | "contact";
 
 const AnimatedBackground = () => {
   const { isLoading, bypassLoading } = usePreloader();
@@ -95,7 +118,7 @@ const AnimatedBackground = () => {
   const [splineApp, setSplineApp] = useState<Application>();
 
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState<Section>("hero");
   const [bongoAnimation, setBongoAnimation] = useState<{
     start: () => void;
     stop: () => void;
@@ -105,8 +128,8 @@ const AnimatedBackground = () => {
     stop: () => void;
   }>();
 
-  const keyboardStates = (idx: number) => {
-    return STATES[idx][isMobile ? "mobile" : "desktop"];
+  const keyboardStates = (section: Section) => {
+    return STATES[section][isMobile ? "mobile" : "desktop"];
   };
 
   const handleMouseHover = (e: SplineEvent) => {
@@ -256,16 +279,40 @@ const AnimatedBackground = () => {
     };
   }, [activeSection, splineApp]);
 
+  const [keyboardRevealed, setKeyboardRevealed] = useState(false);
+  const router = useRouter();
   //reveal keycaps
   useEffect(() => {
-    if (!splineApp || isLoading) return;
+    const hash = activeSection === "hero" ? "#" : `#${activeSection}`;
+    router.push("/" + hash, { scroll: false });
+    if (!splineApp || isLoading || keyboardRevealed) return;
     revealKeyCaps();
-  }, [splineApp, isLoading]);
+  }, [splineApp, isLoading, activeSection]);
   const revealKeyCaps = async () => {
     if (!splineApp) return;
+    const kbd = splineApp.findObjectByName("keyboard");
+    if (!kbd) return;
+    kbd.visible = false;
+    await sleep(400);
+    kbd.visible = true;
+    setKeyboardRevealed(true);
+    console.log(activeSection);
+    gsap.fromTo(
+      kbd?.scale,
+      { x: 0.01, y: 0.01, z: 0.01 },
+      {
+        x: keyboardStates(activeSection).scale.x,
+        y: keyboardStates(activeSection).scale.y,
+        z: keyboardStates(activeSection).scale.z,
+        duration: 1.5,
+        ease: "elastic.out(1, 0.6)",
+      }
+    );
+    // }
+
     const allObjects = splineApp.getAllObjects();
     const keycaps = allObjects.filter((obj) => obj.name === "keycap");
-    await sleep(500);
+    await sleep(900);
     if (isMobile) {
       const mobileKeyCaps = allObjects.filter(
         (obj) => obj.name === "keycap-mobile"
@@ -278,13 +325,13 @@ const AnimatedBackground = () => {
         (obj) => obj.name === "keycap-desktop"
       );
       desktopKeyCaps.forEach(async (keycap, idx) => {
-        await sleep(idx * 100);
+        await sleep(idx * 70);
         keycap.visible = true;
       });
     }
     keycaps.forEach(async (keycap, idx) => {
       keycap.visible = false;
-      await sleep(idx * 100);
+      await sleep(idx * 70);
       keycap.visible = true;
       gsap.fromTo(
         keycap.position,
@@ -314,10 +361,10 @@ const AnimatedBackground = () => {
     const kbd: SPEObject | undefined = splineApp.findObjectByName("keyboard");
     if (!kbd || !splineContainer.current) return;
     gsap.set(kbd.scale, {
-      ...keyboardStates(0).scale,
+      ...keyboardStates("hero").scale,
     });
     gsap.set(kbd.position, {
-      ...keyboardStates(0).position,
+      ...keyboardStates("hero").position,
     });
     gsap.timeline({
       scrollTrigger: {
@@ -328,15 +375,30 @@ const AnimatedBackground = () => {
         // markers: true,
         onEnter: () => {
           setActiveSection("skills");
-          gsap.to(kbd.scale, { ...keyboardStates(1).scale, duration: 1 });
-          gsap.to(kbd.position, { ...keyboardStates(1).position, duration: 1 });
-          gsap.to(kbd.rotation, { ...keyboardStates(1).rotation, duration: 1 });
+          gsap.to(kbd.scale, {
+            ...keyboardStates("skills").scale,
+            duration: 1,
+          });
+          gsap.to(kbd.position, {
+            ...keyboardStates("skills").position,
+            duration: 1,
+          });
+          gsap.to(kbd.rotation, {
+            ...keyboardStates("skills").rotation,
+            duration: 1,
+          });
         },
         onLeaveBack: () => {
           setActiveSection("hero");
-          gsap.to(kbd.scale, { ...keyboardStates(0).scale, duration: 1 });
-          gsap.to(kbd.position, { ...keyboardStates(0).position, duration: 1 });
-          gsap.to(kbd.rotation, { ...keyboardStates(0).rotation, duration: 1 });
+          gsap.to(kbd.scale, { ...keyboardStates("hero").scale, duration: 1 });
+          gsap.to(kbd.position, {
+            ...keyboardStates("hero").position,
+            duration: 1,
+          });
+          gsap.to(kbd.rotation, {
+            ...keyboardStates("hero").rotation,
+            duration: 1,
+          });
           // gsap.to(kbd.rotation, { x: 0, duration: 1 });
         },
       },
@@ -350,15 +412,33 @@ const AnimatedBackground = () => {
         // markers: true,
         onEnter: () => {
           setActiveSection("projects");
-          gsap.to(kbd.scale, { ...keyboardStates(2).scale, duration: 1 });
-          gsap.to(kbd.position, { ...keyboardStates(2).position, duration: 1 });
-          gsap.to(kbd.rotation, { ...keyboardStates(2).rotation, duration: 1 });
+          gsap.to(kbd.scale, {
+            ...keyboardStates("projects").scale,
+            duration: 1,
+          });
+          gsap.to(kbd.position, {
+            ...keyboardStates("projects").position,
+            duration: 1,
+          });
+          gsap.to(kbd.rotation, {
+            ...keyboardStates("projects").rotation,
+            duration: 1,
+          });
         },
         onLeaveBack: () => {
           setActiveSection("skills");
-          gsap.to(kbd.scale, { ...keyboardStates(1).scale, duration: 1 });
-          gsap.to(kbd.position, { ...keyboardStates(1).position, duration: 1 });
-          gsap.to(kbd.rotation, { ...keyboardStates(1).rotation, duration: 1 });
+          gsap.to(kbd.scale, {
+            ...keyboardStates("skills").scale,
+            duration: 1,
+          });
+          gsap.to(kbd.position, {
+            ...keyboardStates("skills").position,
+            duration: 1,
+          });
+          gsap.to(kbd.rotation, {
+            ...keyboardStates("skills").rotation,
+            duration: 1,
+          });
           // gsap.to(kbd.rotation, { x: 0, duration: 1 });
         },
       },
@@ -372,15 +452,33 @@ const AnimatedBackground = () => {
         // markers: true,
         onEnter: () => {
           setActiveSection("contact");
-          gsap.to(kbd.scale, { ...keyboardStates(3).scale, duration: 1 });
-          gsap.to(kbd.position, { ...keyboardStates(3).position, duration: 1 });
-          gsap.to(kbd.rotation, { ...keyboardStates(3).rotation, duration: 1 });
+          gsap.to(kbd.scale, {
+            ...keyboardStates("contact").scale,
+            duration: 1,
+          });
+          gsap.to(kbd.position, {
+            ...keyboardStates("contact").position,
+            duration: 1,
+          });
+          gsap.to(kbd.rotation, {
+            ...keyboardStates("contact").rotation,
+            duration: 1,
+          });
         },
         onLeaveBack: () => {
           setActiveSection("projects");
-          gsap.to(kbd.scale, { ...keyboardStates(2).scale, duration: 1 });
-          gsap.to(kbd.position, { ...keyboardStates(2).position, duration: 1 });
-          gsap.to(kbd.rotation, { ...keyboardStates(2).rotation, duration: 1 });
+          gsap.to(kbd.scale, {
+            ...keyboardStates("projects").scale,
+            duration: 1,
+          });
+          gsap.to(kbd.position, {
+            ...keyboardStates("projects").position,
+            duration: 1,
+          });
+          gsap.to(kbd.rotation, {
+            ...keyboardStates("projects").rotation,
+            duration: 1,
+          });
           // gsap.to(kbd.rotation, { x: 0, duration: 1 });
         },
       },
