@@ -266,10 +266,12 @@ const AnimatedBackground = () => {
         bongoAnimation?.stop();
       }
       if (activeSection === "contact") {
-        await sleep(300);
+        await sleep(600);
+        teardownKeyboard.restart();
         keycapAnimtations?.start();
       } else {
-        await sleep(300);
+        await sleep(600);
+        teardownKeyboard.pause();
         keycapAnimtations?.stop();
       }
     })();
