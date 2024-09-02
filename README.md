@@ -17,7 +17,6 @@ Welcome to the repository for my personal portfolio website! This is where I sho
 - **Frontend**: Next.js, React, Tailwind CSS
 - **Animations**: GSAP, Framer Motion, Spline Runtime
 - **Deployment**: Vercel
-- **CMS**: Sanity (for blog management)
 
 ## 🚀 Getting Started
 
