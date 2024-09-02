@@ -68,7 +68,7 @@ export default function Body({
             <motion.p
               className={cn(
                 "rounded-lg",
-                currentHref !== href ? "text-muted-foreground" : ""
+                currentHref !== href ? "text-muted-foreground" : "underline"
               )}
               onClick={() => setIsActive(false)}
               onMouseOver={() => setSelectedLink({ isActive: true, index })}
