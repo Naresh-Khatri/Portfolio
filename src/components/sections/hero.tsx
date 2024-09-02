@@ -11,6 +11,7 @@ import {
 import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
 import ScrollDownIcon from "../scroll-down-icon";
+import { SiGithub, SiLinkedin } from "react-icons/si";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
@@ -90,7 +91,7 @@ const HeroSection = () => {
                   </BoxReveal>
                 </Link>
                 <div className="md:self-start flex gap-3">
-                  <Tooltip delayDuration={500}>
+                  <Tooltip delayDuration={300}>
                     <TooltipTrigger asChild>
                       <Link href={"#contact"}>
                         <Button
@@ -110,7 +111,7 @@ const HeroSection = () => {
                     target="_blank"
                   >
                     <Button variant={"outline"}>
-                      <Github size={24} fill="#000" />
+                      <SiGithub size={24} />
                     </Button>
                   </Link>
                   <Link
@@ -118,7 +119,7 @@ const HeroSection = () => {
                     target="_blank"
                   >
                     <Button variant={"outline"}>
-                      <Linkedin size={24} />
+                      <SiLinkedin size={24} />
                     </Button>
                   </Link>
                 </div>
