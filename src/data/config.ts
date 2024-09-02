@@ -35,6 +35,7 @@ const config = {
     linkedin: "https://www.linkedin.com/in/naresh-khatri/",
     instagram: "https://www.instagram.com/hotchaddi",
     facebook: "https://www.facebook.com/HotChaddi/",
+    github: "https://github.com/Naresh-Khatri",
   },
 };
 export { config };
