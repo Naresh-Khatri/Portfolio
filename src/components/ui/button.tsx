@@ -52,7 +52,6 @@ const addClassNameRecursively = (
   className: string
 ): ReactNode => {
   const foo = (child: ReactNode) => {
-    console.log(child);
     if (!isValidElement(child)) return child;
 
     return cloneElement(child, {
