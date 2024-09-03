@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import FunnyThemeToggle from "../theme/funny-theme-toggle";
 import { Button } from "../ui/button";
 import { config } from "@/data/config";
+import OnlineUsers from "../realtime/online-users";
 
 interface HeaderProps {
   loader?: boolean;
@@ -16,7 +17,6 @@ interface HeaderProps {
 
 const Header = ({ loader }: HeaderProps) => {
   const [isActive, setIsActive] = useState<boolean>(false);
-
   return (
     <motion.header
       className={cn(
@@ -46,12 +46,14 @@ const Header = ({ loader }: HeaderProps) => {
         }}
       >
       </div> */}
-      <div className={styles.bar}>
+      <div className={cn(styles.bar, "flex items-center justify-between")}>
         <Link href="/" className="flex items-center justify-center">
           <Button variant={"link"} className="text-md">
             {config.author}
           </Button>
         </Link>
+
+        <OnlineUsers />
         <FunnyThemeToggle className="w-6 h-6 mr-4" />
         <Button
           variant={"ghost"}
