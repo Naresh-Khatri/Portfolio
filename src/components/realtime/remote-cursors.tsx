@@ -1,54 +1,34 @@
 "use client";
-import { SocketContext } from "@/contexts/socketio";
+import { CursorsMap, SocketContext } from "@/contexts/socketio";
 import { useMouse } from "@/hooks/use-mouse";
 import { useThrottle } from "@/hooks/use-throttle";
 import { MousePointer2 } from "lucide-react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { motion, useAnimation } from "framer-motion";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { generateRandomCursor } from "@/lib/generate-random-cursor";
 
-type Cursor = {
-  id: string;
-  x: number;
-  y: number;
-  name?: string;
-  color?: string;
-};
-type CursorsMap = Map<string, Cursor>;
-
-const colors = [
-  "#60a5fa",
-  "#f87171",
-  "#4ade80",
-  "#facc15",
-  "#c084fc",
-  "#fb923c",
-  "#f43f5e",
-  "#818cf8",
-  "#22d3ee",
-  "#a3e635",
-];
 // TODO: add clicking animation
+// TODO: listen to socket disconnect
 const RemoteCursors = () => {
-  const { socket } = useContext(SocketContext);
+  const { socket, remoteCursors, setRemoteCursors } = useContext(SocketContext);
+  const localCursor = useRef(generateRandomCursor());
   const isMobile = useMediaQuery("(max-width: 768px)");
   const { x, y } = useMouse({ allowPage: true });
-  const [remoteCursors, setRemoteCursors] = useState<CursorsMap>(new Map());
   useEffect(() => {
     if (typeof window === "undefined" || !socket || isMobile) return;
     socket.on("cursor-changed", (data) => {
-      setRemoteCursors((prev) => {
+      setRemoteCursors((prev: CursorsMap) => {
         const newMap = new Map(prev);
-        // add color if new cursor
-        if (!prev.has(data.id)) {
-          newMap.set(data.id, {
-            ...data,
-            color: colors[Math.floor(Math.random() * colors.length)],
-          });
-        } else {
-          newMap.set(data.id, { ...prev.get(data.id), ...data });
-        }
+        // if (!prev.has(data.id)) {
+        //   newMap.set(data.id, {
+        //     ...data,
+        //   });
+        // } else {
+        //   newMap.set(data.id, { ...prev.get(data.id), ...data });
+        // }
+        newMap.set(data.id, { ...data });
         return newMap;
       });
     });
@@ -57,7 +37,13 @@ const RemoteCursors = () => {
     };
   }, [socket, isMobile]);
   const handleMouseMove = useThrottle((x, y) => {
-    socket?.emit("cursor-change", { x, y, id: socket.id, name: "foo" });
+    socket?.emit("cursor-change", {
+      x,
+      y,
+      id: socket.id,
+      name: localCursor.current.name,
+      color: localCursor.current.color,
+    });
   }, 200);
   useEffect(() => {
     if (isMobile) return;
