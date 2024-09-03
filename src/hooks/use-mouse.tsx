@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 
-export const useMouse = () => {
+type useMouseType = {
+  allowPage?: boolean;
+  allowAngle?: boolean;
+  allowAcc?: boolean;
+};
+
+export const useMouse = ({
+  allowPage,
+  allowAngle,
+  allowAcc,
+}: useMouseType = {}) => {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
   const [angle, setAngle] = useState(0);
@@ -8,11 +18,16 @@ export const useMouse = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setX(e.clientX);
-      setY(e.clientY);
-      const acc = Math.abs(e.movementX) + Math.abs(e.movementY);
-      setAcceleration(acc);
-      setAngle(Math.atan2(e.movementY, e.movementX));
+      setX(allowPage ? e.pageX : e.clientX);
+      setY(allowPage ? e.pageY : e.clientY);
+
+      if (allowAcc) {
+        const acc = Math.abs(e.movementX) + Math.abs(e.movementY);
+        setAcceleration(acc);
+      }
+      if (allowAngle) {
+        setAngle(Math.atan2(e.movementY, e.movementX));
+      }
     };
     if (typeof window !== "undefined")
       window.addEventListener("mousemove", handleMouseMove);
