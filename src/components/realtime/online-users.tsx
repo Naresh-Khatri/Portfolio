@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -13,7 +13,6 @@ const OnlineUsers = () => {
   const { remoteCursors } = useContext(SocketContext);
   const cursors = Array.from(remoteCursors.values());
   if (cursors.length === 0) return null;
-  const listParent = useRef<HTMLUListElement>(null);
 
   const container = {
     hidden: { opacity: 0 },
@@ -48,7 +47,6 @@ const OnlineUsers = () => {
         </div>
         <motion.ul
           className="grid gap-4"
-          ref={listParent}
           variants={container}
           initial="hidden"
           animate="show"
