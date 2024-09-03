@@ -12,6 +12,8 @@ import Script from "next/script";
 import Preloader from "@/components/preloader";
 import EasterEggs from "@/components/easter-eggs";
 import { config } from "@/data/config";
+import SocketContextProvider from "@/contexts/socketio";
+import RemoteCursors from "@/components/remote-cursors";
 
 export const metadata: Metadata = {
   title: config.title,
@@ -75,6 +77,9 @@ export default function RootLayout({
             quantity={100}
           />
           <Preloader>
+            <SocketContextProvider>
+              <RemoteCursors />
+            </SocketContextProvider>
             <TooltipProvider>
               <Header />
               {children}
