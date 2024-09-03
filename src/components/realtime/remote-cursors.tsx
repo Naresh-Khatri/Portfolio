@@ -51,7 +51,7 @@ const RemoteCursors = () => {
   }, [x, y, isMobile]);
   const cursors = Array.from(remoteCursors.values());
   return (
-    <div className="h-0">
+    <div className="h-0 z-10 relative">
       {cursors.map((cursor) => (
         <Cursor
           key={cursor.id}
