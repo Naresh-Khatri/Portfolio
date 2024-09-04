@@ -30,7 +30,7 @@ const OnlineUsers = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="py-0 m-0">
+        <Button variant="ghost" className="p-0 m-0 mr-4 h-fit w-fit">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 animate-pulse rounded-full bg-green-400"></div>
             {cursors.length} online
