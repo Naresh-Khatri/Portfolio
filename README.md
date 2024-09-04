@@ -14,9 +14,9 @@ Welcome to the repository for my personal portfolio website! This is where I sho
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js, React, Tailwind CSS
+- **Frontend**: Next.js, React, Tailwind CSS, Shadcn, Aceternity UI
 - **Animations**: GSAP, Framer Motion, Spline Runtime
-- **Deployment**: Vercel
+- **Misc**: Resend, Socketio, Zod
 
 ## 🚀 Getting Started
 
