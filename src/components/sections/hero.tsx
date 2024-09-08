@@ -12,6 +12,7 @@ import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
 import ScrollDownIcon from "../scroll-down-icon";
 import { SiGithub, SiLinkedin } from "react-icons/si";
+import { config } from "@/data/config";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
@@ -50,9 +51,13 @@ const HeroSection = () => {
                           "cursor-default text-edge-outline font-display sm:text-7xl md:text-9xl "
                         )}
                       >
-                        Naresh
+                        {config.author.split(" ")[0]}
                         <br className="md:block hiidden" />
-                        Khatri
+                        {config.author.split(" ")[1]}
+                        {/* PLEASE hello??
+
+                        <br className="md:block hiidden" />
+                        UNMUTE ME 😢😢 */}
                       </h1>
                     </TooltipTrigger>
                     <TooltipContent
@@ -107,7 +112,7 @@ const HeroSection = () => {
                     </TooltipContent>
                   </Tooltip>
                   <Link
-                    href={"https://github.com/Naresh-Khatri"}
+                    href={config.social.github}
                     target="_blank"
                   >
                     <Button variant={"outline"}>
@@ -115,7 +120,7 @@ const HeroSection = () => {
                     </Button>
                   </Link>
                   <Link
-                    href={"https://www.linkedin.com/in/naresh-khatri/"}
+                    href={config.social.linkedin}
                     target="_blank"
                   >
                     <Button variant={"outline"}>
