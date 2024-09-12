@@ -29,7 +29,7 @@ export async function POST(req: Request) {
       react: EmailTemplate({
         fullName: zodData.fullName,
         email: zodData.email,
-        message: zodData.message
+        message: zodData.message,
       }),
     });
 
