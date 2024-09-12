@@ -4,44 +4,64 @@ import React, {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from "react";
 import { io, Socket } from "socket.io-client";
 
-export type Cursor = {
-  id: string;
-  x: number;
-  y: number;
-  name?: string;
-  color?: string;
+export type User = {
+  socketId: string;
+  name: string;
+  color: string;
+  pos: {
+    x: number;
+    y: number;
+  };
+  location: string;
+  flag: string;
 };
-export type CursorsMap = Map<string, Cursor>;
+export type Message = {
+  socketId: string;
+  content: string;
+  time: Date;
+  username: string;
+};
+
+export type UserMap = Map<string, User>;
 
 type SocketContextType = {
   socket: Socket | null;
-  remoteCursors: CursorsMap;
-  setRemoteCursors: Dispatch<SetStateAction<CursorsMap>>;
+  users: UserMap;
+  setUsers: Dispatch<SetStateAction<UserMap>>;
+  msgs: Message[];
 };
 
 const INITIAL_STATE: SocketContextType = {
   socket: null,
-  remoteCursors: new Map(),
-  setRemoteCursors: () => {},
+  users: new Map(),
+  setUsers: () => {},
+  msgs: [],
 };
 
 export const SocketContext = createContext<SocketContextType>(INITIAL_STATE);
 
 const SocketContextProvider = ({ children }: { children: ReactNode }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [remoteCursors, setRemoteCursors] = useState<CursorsMap>(new Map());
+  const [users, setUsers] = useState<UserMap>(new Map());
+  const [msgs, setMsgs] = useState<Message[]>([]);
+
   // SETUP SOCKET.IO
   useEffect(() => {
-    const socket = io(process.env.NEXT_PUBLIC_WS_URL!);
+    const socket = io(process.env.NEXT_PUBLIC_WS_URL!, {
+      query: { username: localStorage.getItem("username") },
+    });
     setSocket(socket);
-    socket.on("connect", () => {
-      console.log(socket.id);
+    socket.on("connect", () => {});
+    socket.on("msgs-receive-init", (msgs) => {
+      setMsgs(msgs);
+    });
+    socket.on("msg-receive", (msgs) => {
+      setMsgs((p) => [...p, msgs]);
     });
     return () => {
       socket.disconnect();
@@ -49,9 +69,7 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <SocketContext.Provider
-      value={{ socket: socket, remoteCursors, setRemoteCursors }}
-    >
+    <SocketContext.Provider value={{ socket: socket, users, setUsers, msgs }}>
       {children}
     </SocketContext.Provider>
   );
