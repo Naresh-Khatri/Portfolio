@@ -252,9 +252,3 @@ export const themeDisclaimers = {
   ],
 };
 
-export const socialLinks = {
-  github: "https://github.com/Naresh-Khatri",
-  linkedin: "https://www.linkedin.com/in/naresh-khatri/",
-  twitter: "https://x.com/nothotchaddi",
-  instagram: "https://www.instagram.com/hotchaddi",
-};
